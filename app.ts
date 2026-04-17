@@ -9,17 +9,24 @@ module.exports = class SmartEvseApp extends Homey.App {
   public mqttConfig?: MqttConfig;
 
   async onInit(): Promise<void> {
-    const logger: HubLogger = {
-      log: (...a) => this.log(...a),
-      error: (...a) => this.error(...a),
-    };
-    this.mqttHub = new MqttHub(logger);
+    this.log('[APP] onInit entered');
+    try {
+      const logger: HubLogger = {
+        log: (...a) => this.log(...a),
+        error: (...a) => this.error(...a),
+      };
+      this.mqttHub = new MqttHub(logger);
 
-    this.homey.settings.on('set', (key: string) => {
-      if (key === 'mqtt') this.reloadHub().catch((e) => this.error(e));
-    });
+      this.homey.settings.on('set', (key: string) => {
+        if (key === 'mqtt') this.reloadHub().catch((e) => this.error(e));
+      });
 
-    await this.reloadHub();
+      await this.reloadHub();
+      this.log('[APP] onInit completed');
+    } catch (err) {
+      this.error('[APP] onInit FAILED', err);
+      throw err;
+    }
   }
 
   async onUninit(): Promise<void> {

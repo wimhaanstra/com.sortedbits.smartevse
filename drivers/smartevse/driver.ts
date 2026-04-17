@@ -13,8 +13,11 @@ module.exports = class SmartEvseDriver extends Homey.Driver {
   }
 
   async onInit(): Promise<void> {
+    await super.onInit();
+    this.log('[DRV] onInit entered');
     this.registerFlowActions();
     this.registerFlowConditions();
+    this.log('[DRV] onInit completed');
   }
 
   async onPair(session: Homey.Driver.PairSession): Promise<void> {

@@ -1,0 +1,23 @@
+{
+  "id": "set_led_color",
+  "title": { "en": "Set LED colour", "nl": "LED-kleur instellen" },
+  "titleFormatted": {
+    "en": "Set LED [[slot]] to [[r]],[[g]],[[b]]",
+    "nl": "LED [[slot]] instellen op [[r]],[[g]],[[b]]"
+  },
+  "args": [
+    { "name": "device", "type": "device", "filter": "driver_id=smartevse" },
+    {
+      "name": "slot", "type": "dropdown",
+      "values": [
+        { "id": "Off", "label": { "en": "Off", "nl": "Uit" } },
+        { "id": "Normal", "label": { "en": "Normal", "nl": "Normaal" } },
+        { "id": "Smart", "label": { "en": "Smart", "nl": "Slim" } },
+        { "id": "Solar", "label": { "en": "Solar", "nl": "Zon" } }
+      ]
+    },
+    { "name": "r", "type": "number", "min": 0, "max": 255, "step": 1 },
+    { "name": "g", "type": "number", "min": 0, "max": 255, "step": 1 },
+    { "name": "b", "type": "number", "min": 0, "max": 255, "step": 1 }
+  ]
+}

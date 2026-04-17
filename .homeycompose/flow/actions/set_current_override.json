@@ -1,0 +1,12 @@
+{
+  "id": "set_current_override",
+  "title": { "en": "Set charge current override", "nl": "Laadstroom-override instellen" },
+  "titleFormatted": {
+    "en": "Set charge current to [[amps]] A",
+    "nl": "Laadstroom instellen op [[amps]] A"
+  },
+  "args": [
+    { "name": "device", "type": "device", "filter": "driver_id=smartevse" },
+    { "name": "amps", "type": "number", "min": 0, "max": 80, "step": 1 }
+  ]
+}

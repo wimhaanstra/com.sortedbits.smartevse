@@ -1,0 +1,21 @@
+{
+  "id": "set_enable_c2",
+  "title": { "en": "Set phase contactor (C2)", "nl": "Fasecontactor (C2) instellen" },
+  "titleFormatted": {
+    "en": "Set phase contactor to [[mode]]",
+    "nl": "Fasecontactor instellen op [[mode]]"
+  },
+  "args": [
+    { "name": "device", "type": "device", "filter": "driver_id=smartevse" },
+    {
+      "name": "mode", "type": "dropdown",
+      "values": [
+        { "id": "Not present", "label": { "en": "Not present", "nl": "Niet aanwezig" } },
+        { "id": "Always Off", "label": { "en": "Always off", "nl": "Altijd uit" } },
+        { "id": "Solar Off", "label": { "en": "Off on solar", "nl": "Uit bij zon" } },
+        { "id": "Always On", "label": { "en": "Always on", "nl": "Altijd aan" } },
+        { "id": "Auto", "label": { "en": "Auto", "nl": "Automatisch" } }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "type": "enum",
+  "title": { "en": "Plug state", "nl": "Stekkerstatus" },
+  "getable": true,
+  "setable": false,
+  "values": [
+    { "id": "Connected", "title": { "en": "Connected", "nl": "Aangesloten" } },
+    { "id": "Disconnected", "title": { "en": "Disconnected", "nl": "Niet aangesloten" } }
+  ]
+}

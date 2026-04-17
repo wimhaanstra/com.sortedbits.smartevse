@@ -1,0 +1,7 @@
+{
+  "type": "number",
+  "title": { "en": "Control pilot PWM", "nl": "CP PWM" },
+  "decimals": 0,
+  "getable": true,
+  "setable": false
+}

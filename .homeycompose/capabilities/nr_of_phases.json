@@ -1,0 +1,10 @@
+{
+  "type": "enum",
+  "title": { "en": "Number of phases", "nl": "Aantal fasen" },
+  "getable": true,
+  "setable": false,
+  "values": [
+    { "id": "1", "title": { "en": "1-phase", "nl": "1-fase" } },
+    { "id": "3", "title": { "en": "3-phase", "nl": "3-fase" } }
+  ]
+}

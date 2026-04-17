@@ -1,0 +1,6 @@
+{
+  "type": "string",
+  "title": { "en": "Charger state", "nl": "Laderstatus" },
+  "getable": true,
+  "setable": false
+}

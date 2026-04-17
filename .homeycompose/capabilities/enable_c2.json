@@ -1,0 +1,13 @@
+{
+  "type": "enum",
+  "title": { "en": "Phase contactor (C2)", "nl": "Fasecontactor (C2)" },
+  "getable": true,
+  "setable": true,
+  "values": [
+    { "id": "Not present", "title": { "en": "Not present", "nl": "Niet aanwezig" } },
+    { "id": "Always Off", "title": { "en": "Always off", "nl": "Altijd uit" } },
+    { "id": "Solar Off", "title": { "en": "Off on solar", "nl": "Uit bij zon" } },
+    { "id": "Always On", "title": { "en": "Always on", "nl": "Altijd aan" } },
+    { "id": "Auto", "title": { "en": "Auto", "nl": "Automatisch" } }
+  ]
+}

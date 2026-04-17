@@ -1,0 +1,11 @@
+{
+  "type": "number",
+  "title": { "en": "Mains capacity limit", "nl": "Netaansluiting limiet" },
+  "units": { "en": "A", "nl": "A" },
+  "min": 10,
+  "max": 600,
+  "step": 1,
+  "decimals": 0,
+  "getable": true,
+  "setable": true
+}

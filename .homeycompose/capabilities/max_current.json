@@ -1,0 +1,9 @@
+{
+  "type": "number",
+  "title": { "en": "Maximum current", "nl": "Maximale stroom" },
+  "units": { "en": "A", "nl": "A" },
+  "decimals": 1,
+  "getable": true,
+  "setable": false,
+  "insights": true
+}

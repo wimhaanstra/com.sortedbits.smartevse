@@ -1,0 +1,10 @@
+{
+  "type": "number",
+  "title": { "en": "Cable lock", "nl": "Kabelslot" },
+  "min": 0,
+  "max": 4,
+  "step": 1,
+  "decimals": 0,
+  "getable": true,
+  "setable": true
+}

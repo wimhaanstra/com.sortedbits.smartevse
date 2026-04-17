@@ -1,0 +1,7 @@
+{
+  "type": "number",
+  "title": { "en": "Control pilot PWM override", "nl": "CP PWM override" },
+  "decimals": 0,
+  "getable": true,
+  "setable": true
+}

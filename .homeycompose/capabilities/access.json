@@ -1,0 +1,11 @@
+{
+  "type": "enum",
+  "title": { "en": "Access", "nl": "Toegang" },
+  "getable": true,
+  "setable": false,
+  "values": [
+    { "id": "Allow", "title": { "en": "Allow", "nl": "Toegestaan" } },
+    { "id": "Deny", "title": { "en": "Deny", "nl": "Geweigerd" } },
+    { "id": "Pause", "title": { "en": "Pause", "nl": "Pauze" } }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "type": "enum",
+  "title": { "en": "Mode", "nl": "Modus" },
+  "getable": true,
+  "setable": true,
+  "insights": false,
+  "uiComponent": "picker",
+  "values": [
+    { "id": "Off", "title": { "en": "Off", "nl": "Uit" } },
+    { "id": "Normal", "title": { "en": "Normal", "nl": "Normaal" } },
+    { "id": "Smart", "title": { "en": "Smart", "nl": "Slim" } },
+    { "id": "Solar", "title": { "en": "Solar", "nl": "Zon" } },
+    { "id": "Pause", "title": { "en": "Pause", "nl": "Pauze" } }
+  ],
+  "icon": "/assets/icon.svg"
+}

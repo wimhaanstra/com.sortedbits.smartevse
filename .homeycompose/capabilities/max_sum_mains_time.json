@@ -1,0 +1,8 @@
+{
+  "type": "number",
+  "title": { "en": "Mains overload time", "nl": "Overschrijdingstijd" },
+  "units": { "en": "s", "nl": "s" },
+  "decimals": 0,
+  "getable": true,
+  "setable": false
+}

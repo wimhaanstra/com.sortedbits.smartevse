@@ -1,0 +1,13 @@
+{
+  "type": "number",
+  "title": { "en": "Charge current", "nl": "Laadstroom" },
+  "units": { "en": "A", "nl": "A" },
+  "min": 6,
+  "max": 32,
+  "step": 1,
+  "decimals": 0,
+  "getable": true,
+  "setable": true,
+  "uiComponent": "slider",
+  "insights": true
+}

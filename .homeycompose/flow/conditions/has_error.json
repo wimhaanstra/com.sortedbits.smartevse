@@ -1,0 +1,5 @@
+{
+  "id": "has_error",
+  "title": { "en": "Has !{{an error|no error}}", "nl": "Heeft !{{een fout|geen fout}}" },
+  "args": [{ "name": "device", "type": "device", "filter": "driver_id=smartevse" }]
+}

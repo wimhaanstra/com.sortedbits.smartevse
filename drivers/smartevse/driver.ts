@@ -14,6 +14,7 @@ module.exports = class SmartEvseDriver extends Homey.Driver {
 
   async onInit(): Promise<void> {
     this.registerFlowActions();
+    this.registerFlowConditions();
   }
 
   async onPair(session: Homey.Driver.PairSession): Promise<void> {
@@ -96,5 +97,26 @@ module.exports = class SmartEvseDriver extends Homey.Driver {
       const capId = `led_color_${args.slot.toLowerCase()}`;
       await args.device.setCapabilityValue(capId, `${args.r},${args.g},${args.b}`);
     });
+  }
+
+  private registerFlowConditions(): void {
+    this.homey.flow.getConditionCard('is_mode')
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .registerRunListener(async (args: { device: any; mode: string }) => args.device.getCapabilityValue('mode') === args.mode);
+
+    this.homey.flow.getConditionCard('is_plugged_in')
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .registerRunListener(async (args: { device: any }) => args.device.getCapabilityValue('ev_plug_state') === 'Connected');
+
+    this.homey.flow.getConditionCard('is_charging')
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .registerRunListener(async (args: { device: any }) => Boolean(args.device.getCapabilityValue('evcharger_charging')));
+
+    this.homey.flow.getConditionCard('has_error')
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .registerRunListener(async (args: { device: any }) => {
+        const err = args.device.getCapabilityValue('error');
+        return Boolean(err) && err !== 'NO_ERROR' && err !== 'None';
+      });
   }
 };

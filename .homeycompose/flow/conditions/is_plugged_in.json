@@ -1,0 +1,5 @@
+{
+  "id": "is_plugged_in",
+  "title": { "en": "EV !{{is|isn't}} plugged in", "nl": "EV !{{is|is niet}} aangesloten" },
+  "args": [{ "name": "device", "type": "device", "filter": "driver_id=smartevse" }]
+}

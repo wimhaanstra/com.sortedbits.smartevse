@@ -1,0 +1,12 @@
+{
+  "id": "feed_home_battery_current",
+  "title": { "en": "Feed home battery current", "nl": "Thuisaccustroom voeden" },
+  "titleFormatted": {
+    "en": "Feed home battery current [[amps]] A (positive = charging)",
+    "nl": "Voed thuisaccustroom [[amps]] A (positief = laden)"
+  },
+  "args": [
+    { "name": "device", "type": "device", "filter": "driver_id=smartevse" },
+    { "name": "amps", "type": "number", "min": -600, "max": 600, "step": 0.1 }
+  ]
+}

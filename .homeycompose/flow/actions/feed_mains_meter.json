@@ -1,0 +1,14 @@
+{
+  "id": "feed_mains_meter",
+  "title": { "en": "Feed mains meter (L1/L2/L3)", "nl": "Netmeter voeden (L1/L2/L3)" },
+  "titleFormatted": {
+    "en": "Feed mains meter with [[l1]] A / [[l2]] A / [[l3]] A",
+    "nl": "Voed netmeter met [[l1]] A / [[l2]] A / [[l3]] A"
+  },
+  "args": [
+    { "name": "device", "type": "device", "filter": "driver_id=smartevse" },
+    { "name": "l1", "type": "number", "min": -600, "max": 600, "step": 0.1, "placeholder": { "en": "L1 amps", "nl": "L1 ampère" } },
+    { "name": "l2", "type": "number", "min": -600, "max": 600, "step": 0.1, "placeholder": { "en": "L2 amps", "nl": "L2 ampère" } },
+    { "name": "l3", "type": "number", "min": -600, "max": 600, "step": 0.1, "placeholder": { "en": "L3 amps", "nl": "L3 ampère" } }
+  ]
+}

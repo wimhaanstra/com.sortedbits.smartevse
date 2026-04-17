@@ -1,4 +1,4 @@
-import { decode } from '../lib/topic-codec';
+import { decode, encode } from '../lib/topic-codec';
 
 describe('decode', () => {
   test('MainsCurrentL1 deci-A → A', () => {
@@ -86,5 +86,63 @@ describe('decode', () => {
 
   test('unknown topic returns null', () => {
     expect(decode('NonExistentTopic', '123')).toBeNull();
+  });
+});
+
+describe('encode', () => {
+  test('mode capability → Set/Mode payload', () => {
+    expect(encode('mode', 'Smart')).toEqual({ topic: 'Set/Mode', payload: 'Smart' });
+  });
+
+  test('mode unknown value → null', () => {
+    expect(encode('mode', 'Bogus')).toBeNull();
+  });
+
+  test('charge_current A → Set/CurrentOverride deci-A', () => {
+    expect(encode('charge_current', 16)).toEqual({ topic: 'Set/CurrentOverride', payload: '160' });
+  });
+
+  test('charge_current rounds to nearest deci-A', () => {
+    expect(encode('charge_current', 6.04)).toEqual({ topic: 'Set/CurrentOverride', payload: '60' });
+  });
+
+  test('cable_lock numeric', () => {
+    expect(encode('cable_lock', 2)).toEqual({ topic: 'Set/CableLock', payload: '2' });
+  });
+
+  test('cable_lock out-of-range rejected', () => {
+    expect(encode('cable_lock', 9)).toBeNull();
+  });
+
+  test('enable_c2 string', () => {
+    expect(encode('enable_c2', 'Auto')).toEqual({ topic: 'Set/EnableC2', payload: 'Auto' });
+  });
+
+  test('required_evccid', () => {
+    expect(encode('required_evccid', 'ABCD1234')).toEqual({ topic: 'Set/RequiredEVCCID', payload: 'ABCD1234' });
+  });
+
+  test('led_color_normal RGB', () => {
+    expect(encode('led_color_normal', '0,255,0')).toEqual({ topic: 'Set/ColorNormal', payload: '0,255,0' });
+  });
+
+  test('led_color_normal rejects bad format', () => {
+    expect(encode('led_color_normal', 'green')).toBeNull();
+  });
+
+  test('max_sum_mains A integer (clamped 10-600)', () => {
+    expect(encode('max_sum_mains', 300)).toEqual({ topic: 'Set/CurrentMaxSumMains', payload: '300' });
+  });
+
+  test('max_sum_mains out-of-range rejected', () => {
+    expect(encode('max_sum_mains', 700)).toBeNull();
+  });
+
+  test('cp_pwm_override numeric passthrough', () => {
+    expect(encode('cp_pwm_override', 50)).toEqual({ topic: 'Set/CPPWMOverride', payload: '50' });
+  });
+
+  test('unknown capability returns null', () => {
+    expect(encode('nope', 'x')).toBeNull();
   });
 });

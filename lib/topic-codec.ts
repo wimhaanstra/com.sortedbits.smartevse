@@ -126,3 +126,68 @@ export function decode(suffix: string, payload: string): DecodeResult | null {
 }
 
 export const KNOWN_SUFFIXES = Object.keys(DECODERS);
+
+export interface EncodeResult { topic: string; payload: string; }
+type Encoder = (value: unknown) => EncodeResult | null;
+
+const RGB_RE = /^\d{1,3},\d{1,3},\d{1,3}$/;
+
+function rgbEnc(topic: string, v: unknown): EncodeResult | null {
+  if (typeof v !== 'string' || !RGB_RE.test(v)) return null;
+  const parts = v.split(',').map(Number);
+  if (parts.some((n) => n < 0 || n > 255)) return null;
+  return { topic, payload: v };
+}
+
+const ENCODERS: Record<string, Encoder> = {
+  mode: (v) => {
+    const m = typeof v === 'string' ? matchEnum(MODES, v) : null;
+    return m ? { topic: 'Set/Mode', payload: m } : null;
+  },
+  charge_current: (v) => {
+    if (typeof v !== 'number' || !Number.isFinite(v)) return null;
+    return { topic: 'Set/CurrentOverride', payload: String(Math.round(v * 10)) };
+  },
+  cable_lock: (v) => {
+    if (typeof v !== 'number' || !Number.isInteger(v) || v < 0 || v > 4) return null;
+    return { topic: 'Set/CableLock', payload: String(v) };
+  },
+  enable_c2: (v) => {
+    if (typeof v === 'string' && matchEnum(ENABLE_C2, v)) {
+      return { topic: 'Set/EnableC2', payload: v };
+    }
+    if (typeof v === 'number' && v >= 0 && v < ENABLE_C2.length) {
+      return { topic: 'Set/EnableC2', payload: String(v) };
+    }
+    return null;
+  },
+  required_evccid: (v) => {
+    if (typeof v !== 'string') return null;
+    return { topic: 'Set/RequiredEVCCID', payload: v };
+  },
+  led_color_off: (v) => rgbEnc('Set/ColorOff', v),
+  led_color_normal: (v) => rgbEnc('Set/ColorNormal', v),
+  led_color_smart: (v) => rgbEnc('Set/ColorSmart', v),
+  led_color_solar: (v) => rgbEnc('Set/ColorSolar', v),
+  max_sum_mains: (v) => {
+    if (typeof v !== 'number' || !Number.isFinite(v)) return null;
+    const n = Math.round(v);
+    if (n < 10 || n > 600) return null;
+    return { topic: 'Set/CurrentMaxSumMains', payload: String(n) };
+  },
+  cp_pwm_override: (v) => {
+    if (typeof v !== 'number' || !Number.isFinite(v)) return null;
+    return { topic: 'Set/CPPWMOverride', payload: String(Math.round(v)) };
+  },
+  custom_button: (v) => {
+    if (v !== 'On' && v !== 'Off') return null;
+    return { topic: 'CustomButton', payload: v };
+  },
+};
+
+export function encode(capId: string, value: unknown): EncodeResult | null {
+  const enc = ENCODERS[capId];
+  return enc ? enc(value) : null;
+}
+
+export const WRITABLE_CAPS = Object.keys(ENCODERS);

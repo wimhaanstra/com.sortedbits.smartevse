@@ -1,14 +1,44 @@
 'use strict';
 
 import Homey from 'homey';
+import { MqttHub, HubLogger } from './lib/mqtt-hub';
+import { MqttConfig } from './lib/types';
 
-module.exports = class MyApp extends Homey.App {
+module.exports = class SmartEvseApp extends Homey.App {
+  public mqttHub!: MqttHub;
+  public mqttConfig?: MqttConfig;
 
-  /**
-   * onInit is called when the app is initialized.
-   */
-  async onInit() {
-    this.log('MyApp has been initialized');
+  async onInit(): Promise<void> {
+    const logger: HubLogger = {
+      log: (...a) => this.log(...a),
+      error: (...a) => this.error(...a),
+    };
+    this.mqttHub = new MqttHub(logger);
+
+    this.homey.settings.on('set', (key: string) => {
+      if (key === 'mqtt') this.reloadHub().catch((e) => this.error(e));
+    });
+
+    await this.reloadHub();
   }
 
+  async onUninit(): Promise<void> {
+    await this.mqttHub.close();
+  }
+
+  private async reloadHub(): Promise<void> {
+    const cfg = this.homey.settings.get('mqtt') as MqttConfig | undefined;
+    this.mqttConfig = cfg;
+    if (!cfg?.host) {
+      this.log('MQTT broker not configured yet; skipping connect.');
+      return;
+    }
+    try {
+      await this.mqttHub.close();
+      await this.mqttHub.connect(cfg);
+      this.log('MQTT broker connected');
+    } catch (err) {
+      this.error('MQTT connect failed:', err);
+    }
+  }
 };

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script type="text/javascript" src="/homey.js" data-origin="settings"></script>
+</head>
+<body>
+  <header class="homey-header">
+    <h1 class="homey-title" data-i18n="settings.title">MQTT broker</h1>
+  </header>
+  <fieldset class="homey-form-fieldset">
+    <div class="homey-form-group">
+      <label class="homey-form-label" data-i18n="settings.host">Host</label>
+      <input id="host" type="text" class="homey-form-input" />
+    </div>
+    <div class="homey-form-group">
+      <label class="homey-form-label" data-i18n="settings.port">Port</label>
+      <input id="port" type="number" class="homey-form-input" value="1883" />
+    </div>
+    <div class="homey-form-group">
+      <label class="homey-form-label" data-i18n="settings.protocol">Protocol</label>
+      <select id="protocol" class="homey-form-input">
+        <option value="mqtt">mqtt://</option>
+        <option value="mqtts">mqtts://</option>
+        <option value="ws">ws://</option>
+        <option value="wss">wss://</option>
+      </select>
+    </div>
+    <div class="homey-form-group">
+      <label class="homey-form-label" data-i18n="settings.username">Username</label>
+      <input id="username" type="text" class="homey-form-input" />
+    </div>
+    <div class="homey-form-group">
+      <label class="homey-form-label" data-i18n="settings.password">Password</label>
+      <input id="password" type="password" class="homey-form-input" />
+    </div>
+    <p id="status" class="homey-text-small"></p>
+    <button id="save" class="homey-button-primary-full" data-i18n="settings.save">Save</button>
+  </fieldset>
+  <script>
+    function onHomeyReady(Homey) {
+      const ids = ['host', 'port', 'protocol', 'username', 'password'];
+      Homey.get('mqtt', (err, saved) => {
+        const cfg = saved || { host: '', port: 1883, protocol: 'mqtt' };
+        for (const k of ids) {
+          const el = document.getElementById(k);
+          if (cfg[k] !== undefined) el.value = cfg[k];
+        }
+        Homey.ready();
+      });
+      document.getElementById('save').addEventListener('click', () => {
+        const cfg = {
+          host: document.getElementById('host').value.trim(),
+          port: Number(document.getElementById('port').value),
+          protocol: document.getElementById('protocol').value,
+          username: document.getElementById('username').value || undefined,
+          password: document.getElementById('password').value || undefined,
+        };
+        Homey.set('mqtt', cfg, (err) => {
+          document.getElementById('status').textContent =
+            err ? String(err) : Homey.__('settings.status_connected');
+        });
+      });
+    }
+  </script>
+</body>
+</html>

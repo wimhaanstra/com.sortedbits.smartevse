@@ -1,3 +1,30 @@
 {
-  "extends": "athom/homey-app"
+  "extends": "athom/homey-app",
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".ts", ".mjs", ".js", ".json"]
+      }
+    }
+  },
+  "rules": {
+    "node/no-missing-import": ["error", {
+      "allowModules": ["homey"],
+      "tryExtensions": [".ts", ".js", ".json"]
+    }],
+    "import/extensions": ["error", "ignorePackages", {
+      "ts": "never",
+      "js": "never",
+      "mjs": "never",
+      "jsx": "never"
+    }]
+  },
+  "overrides": [
+    {
+      "files": ["test/**/*.ts"],
+      "parserOptions": {
+        "project": "./tsconfig.eslint.json"
+      }
+    }
+  ]
 }

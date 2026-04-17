@@ -8,10 +8,12 @@
     "local"
   ],
   "name": {
-    "en": "SmartEVSE"
+    "en": "SmartEVSE",
+    "nl": "SmartEVSE"
   },
   "description": {
-    "en": "Full support for SmartEVSE"
+    "en": "Full support for SmartEVSE",
+    "nl": "Volledige ondersteuning voor SmartEVSE"
   },
   "category": [
     "energy"

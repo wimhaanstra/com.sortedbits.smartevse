@@ -1,0 +1,32 @@
+{
+  "app": {
+    "name": "SmartEVSE",
+    "description": "Volledige ondersteuning voor SmartEVSE"
+  },
+  "settings": {
+    "title": "MQTT-broker",
+    "host": "Host",
+    "port": "Poort",
+    "protocol": "Protocol",
+    "username": "Gebruikersnaam",
+    "password": "Wachtwoord",
+    "save": "Opslaan",
+    "status_connected": "Verbonden",
+    "status_retrying": "Verbinding herstellen",
+    "status_error": "Fout"
+  },
+  "pair": {
+    "title": "SmartEVSE toevoegen",
+    "name": "Apparaatnaam",
+    "prefix": "Topic-prefix",
+    "prefix_hint": "bijv. SmartEVSE/8881",
+    "test": "Verbinding testen",
+    "ok": "Apparaat is online",
+    "timeout": "Geen reactie binnen 5 seconden",
+    "no_broker": "Configureer eerst de MQTT-broker in de app-instellingen"
+  },
+  "unavailable": {
+    "broker_disconnected": "MQTT-broker niet verbonden",
+    "device_offline": "SmartEVSE is offline"
+  }
+}

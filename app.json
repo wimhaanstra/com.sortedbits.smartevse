@@ -2,17 +2,19 @@
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.sortedbits.smartevse",
   "version": "1.0.0",
-  "compatibility": ">=12.4.0",
+  "compatibility": ">=12.13.0",
   "sdk": 3,
   "runtime": "nodejs",
   "platforms": [
     "local"
   ],
   "name": {
-    "en": "SmartEVSE"
+    "en": "SmartEVSE",
+    "nl": "SmartEVSE"
   },
   "description": {
-    "en": "Full support for SmartEVSE"
+    "en": "Full support for SmartEVSE",
+    "nl": "Volledige ondersteuning voor SmartEVSE"
   },
   "category": [
     "energy"
@@ -26,5 +28,1322 @@
   "author": {
     "name": "Wim Haanstra",
     "email": "wim@haanstra.io"
+  },
+  "flow": {
+    "triggers": [
+      {
+        "id": "charger_state_changed",
+        "title": {
+          "en": "Charger state changed",
+          "nl": "Laderstatus gewijzigd"
+        },
+        "tokens": [
+          {
+            "name": "state",
+            "type": "string",
+            "title": {
+              "en": "State",
+              "nl": "Status"
+            },
+            "example": {
+              "en": "State C, Charging"
+            }
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=smartevse"
+          }
+        ]
+      },
+      {
+        "id": "error_changed",
+        "title": {
+          "en": "Error changed",
+          "nl": "Fout gewijzigd"
+        },
+        "tokens": [
+          {
+            "name": "error",
+            "type": "string",
+            "title": {
+              "en": "Error",
+              "nl": "Fout"
+            },
+            "example": {
+              "en": "NO_ERROR"
+            }
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=smartevse"
+          }
+        ]
+      },
+      {
+        "id": "rfid_swiped",
+        "title": {
+          "en": "RFID card swiped",
+          "nl": "RFID-pas gescand"
+        },
+        "tokens": [
+          {
+            "name": "uid",
+            "type": "string",
+            "title": {
+              "en": "UID",
+              "nl": "UID"
+            },
+            "example": {
+              "en": "112233445566"
+            }
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=smartevse"
+          }
+        ]
+      }
+    ],
+    "conditions": [
+      {
+        "id": "has_error",
+        "title": {
+          "en": "Has !{{an error|no error}}",
+          "nl": "Heeft !{{een fout|geen fout}}"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=smartevse"
+          }
+        ]
+      },
+      {
+        "id": "is_charging",
+        "title": {
+          "en": "!{{Is|Isn't}} charging",
+          "nl": "!{{Laadt|Laadt niet}}"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=smartevse"
+          }
+        ]
+      },
+      {
+        "id": "is_mode",
+        "title": {
+          "en": "Mode !{{is|isn't}} [[mode]]",
+          "nl": "Modus !{{is|is niet}} [[mode]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=smartevse"
+          },
+          {
+            "name": "mode",
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "Off",
+                "label": {
+                  "en": "Off",
+                  "nl": "Uit"
+                }
+              },
+              {
+                "id": "Normal",
+                "label": {
+                  "en": "Normal",
+                  "nl": "Normaal"
+                }
+              },
+              {
+                "id": "Smart",
+                "label": {
+                  "en": "Smart",
+                  "nl": "Slim"
+                }
+              },
+              {
+                "id": "Solar",
+                "label": {
+                  "en": "Solar",
+                  "nl": "Zon"
+                }
+              },
+              {
+                "id": "Pause",
+                "label": {
+                  "en": "Pause",
+                  "nl": "Pauze"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "is_plugged_in",
+        "title": {
+          "en": "EV !{{is|isn't}} plugged in",
+          "nl": "EV !{{is|is niet}} aangesloten"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=smartevse"
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "feed_ev_meter",
+        "title": {
+          "en": "Feed EV meter (L1/L2/L3/P/E)",
+          "nl": "EV-meter voeden (L1/L2/L3/P/E)"
+        },
+        "titleFormatted": {
+          "en": "Feed EV meter: [[l1]] A / [[l2]] A / [[l3]] A, [[power]] W, [[energy]] Wh",
+          "nl": "Voed EV-meter: [[l1]] A / [[l2]] A / [[l3]] A, [[power]] W, [[energy]] Wh"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=smartevse"
+          },
+          {
+            "name": "l1",
+            "type": "number",
+            "min": -600,
+            "max": 600,
+            "step": 0.1
+          },
+          {
+            "name": "l2",
+            "type": "number",
+            "min": -600,
+            "max": 600,
+            "step": 0.1
+          },
+          {
+            "name": "l3",
+            "type": "number",
+            "min": -600,
+            "max": 600,
+            "step": 0.1
+          },
+          {
+            "name": "power",
+            "type": "number",
+            "min": -200000,
+            "max": 200000,
+            "step": 1,
+            "placeholder": {
+              "en": "Power (W)",
+              "nl": "Vermogen (W)"
+            }
+          },
+          {
+            "name": "energy",
+            "type": "number",
+            "min": 0,
+            "max": 1000000000,
+            "step": 1,
+            "placeholder": {
+              "en": "Total energy (Wh)",
+              "nl": "Totale energie (Wh)"
+            }
+          }
+        ]
+      },
+      {
+        "id": "feed_home_battery_current",
+        "title": {
+          "en": "Feed home battery current",
+          "nl": "Thuisaccustroom voeden"
+        },
+        "titleFormatted": {
+          "en": "Feed home battery current [[amps]] A (positive = charging)",
+          "nl": "Voed thuisaccustroom [[amps]] A (positief = laden)"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=smartevse"
+          },
+          {
+            "name": "amps",
+            "type": "number",
+            "min": -600,
+            "max": 600,
+            "step": 0.1
+          }
+        ]
+      },
+      {
+        "id": "feed_mains_meter",
+        "title": {
+          "en": "Feed mains meter (L1/L2/L3)",
+          "nl": "Netmeter voeden (L1/L2/L3)"
+        },
+        "titleFormatted": {
+          "en": "Feed mains meter with [[l1]] A / [[l2]] A / [[l3]] A",
+          "nl": "Voed netmeter met [[l1]] A / [[l2]] A / [[l3]] A"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=smartevse"
+          },
+          {
+            "name": "l1",
+            "type": "number",
+            "min": -600,
+            "max": 600,
+            "step": 0.1,
+            "placeholder": {
+              "en": "L1 amps",
+              "nl": "L1 ampère"
+            }
+          },
+          {
+            "name": "l2",
+            "type": "number",
+            "min": -600,
+            "max": 600,
+            "step": 0.1,
+            "placeholder": {
+              "en": "L2 amps",
+              "nl": "L2 ampère"
+            }
+          },
+          {
+            "name": "l3",
+            "type": "number",
+            "min": -600,
+            "max": 600,
+            "step": 0.1,
+            "placeholder": {
+              "en": "L3 amps",
+              "nl": "L3 ampère"
+            }
+          }
+        ]
+      },
+      {
+        "id": "set_cable_lock",
+        "title": {
+          "en": "Set cable lock",
+          "nl": "Kabelslot instellen"
+        },
+        "titleFormatted": {
+          "en": "Set cable lock to [[value]]",
+          "nl": "Kabelslot instellen op [[value]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=smartevse"
+          },
+          {
+            "name": "value",
+            "type": "number",
+            "min": 0,
+            "max": 4,
+            "step": 1
+          }
+        ]
+      },
+      {
+        "id": "set_current_override",
+        "title": {
+          "en": "Set charge current override",
+          "nl": "Laadstroom-override instellen"
+        },
+        "titleFormatted": {
+          "en": "Set charge current to [[amps]] A",
+          "nl": "Laadstroom instellen op [[amps]] A"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=smartevse"
+          },
+          {
+            "name": "amps",
+            "type": "number",
+            "min": 0,
+            "max": 80,
+            "step": 1
+          }
+        ]
+      },
+      {
+        "id": "set_enable_c2",
+        "title": {
+          "en": "Set phase contactor (C2)",
+          "nl": "Fasecontactor (C2) instellen"
+        },
+        "titleFormatted": {
+          "en": "Set phase contactor to [[mode]]",
+          "nl": "Fasecontactor instellen op [[mode]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=smartevse"
+          },
+          {
+            "name": "mode",
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "Not present",
+                "label": {
+                  "en": "Not present",
+                  "nl": "Niet aanwezig"
+                }
+              },
+              {
+                "id": "Always Off",
+                "label": {
+                  "en": "Always off",
+                  "nl": "Altijd uit"
+                }
+              },
+              {
+                "id": "Solar Off",
+                "label": {
+                  "en": "Off on solar",
+                  "nl": "Uit bij zon"
+                }
+              },
+              {
+                "id": "Always On",
+                "label": {
+                  "en": "Always on",
+                  "nl": "Altijd aan"
+                }
+              },
+              {
+                "id": "Auto",
+                "label": {
+                  "en": "Auto",
+                  "nl": "Automatisch"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "set_led_color",
+        "title": {
+          "en": "Set LED colour",
+          "nl": "LED-kleur instellen"
+        },
+        "titleFormatted": {
+          "en": "Set LED [[slot]] to [[r]],[[g]],[[b]]",
+          "nl": "LED [[slot]] instellen op [[r]],[[g]],[[b]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=smartevse"
+          },
+          {
+            "name": "slot",
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "Off",
+                "label": {
+                  "en": "Off",
+                  "nl": "Uit"
+                }
+              },
+              {
+                "id": "Normal",
+                "label": {
+                  "en": "Normal",
+                  "nl": "Normaal"
+                }
+              },
+              {
+                "id": "Smart",
+                "label": {
+                  "en": "Smart",
+                  "nl": "Slim"
+                }
+              },
+              {
+                "id": "Solar",
+                "label": {
+                  "en": "Solar",
+                  "nl": "Zon"
+                }
+              }
+            ]
+          },
+          {
+            "name": "r",
+            "type": "number",
+            "min": 0,
+            "max": 255,
+            "step": 1
+          },
+          {
+            "name": "g",
+            "type": "number",
+            "min": 0,
+            "max": 255,
+            "step": 1
+          },
+          {
+            "name": "b",
+            "type": "number",
+            "min": 0,
+            "max": 255,
+            "step": 1
+          }
+        ]
+      },
+      {
+        "id": "set_mode",
+        "title": {
+          "en": "Set charging mode",
+          "nl": "Laadmodus instellen"
+        },
+        "titleFormatted": {
+          "en": "Set charging mode to [[mode]]",
+          "nl": "Laadmodus instellen op [[mode]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=smartevse"
+          },
+          {
+            "name": "mode",
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "Off",
+                "label": {
+                  "en": "Off",
+                  "nl": "Uit"
+                }
+              },
+              {
+                "id": "Normal",
+                "label": {
+                  "en": "Normal",
+                  "nl": "Normaal"
+                }
+              },
+              {
+                "id": "Smart",
+                "label": {
+                  "en": "Smart",
+                  "nl": "Slim"
+                }
+              },
+              {
+                "id": "Solar",
+                "label": {
+                  "en": "Solar",
+                  "nl": "Zon"
+                }
+              },
+              {
+                "id": "Pause",
+                "label": {
+                  "en": "Pause",
+                  "nl": "Pauze"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "simulate_rfid_swipe",
+        "title": {
+          "en": "Simulate RFID swipe",
+          "nl": "RFID-pas simuleren"
+        },
+        "titleFormatted": {
+          "en": "Swipe RFID UID [[uid]]",
+          "nl": "RFID-UID [[uid]] simuleren"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=smartevse"
+          },
+          {
+            "name": "uid",
+            "type": "text",
+            "placeholder": {
+              "en": "12 or 14 hex chars",
+              "nl": "12 of 14 hex-tekens"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "drivers": [
+    {
+      "id": "smartevse",
+      "name": {
+        "en": "SmartEVSE",
+        "nl": "SmartEVSE"
+      },
+      "class": "evcharger",
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "images": {
+        "small": "/drivers/smartevse/assets/small.png",
+        "large": "/drivers/smartevse/assets/large.png",
+        "xlarge": "/drivers/smartevse/assets/xlarge.png"
+      },
+      "capabilities": [
+        "evcharger_charging",
+        "evcharger_charging_state",
+        "mode",
+        "target_power",
+        "target_power_mode",
+        "charge_current",
+        "measure_power",
+        "meter_power.charged",
+        "meter_power.total_charged",
+        "meter_power.mains_import",
+        "meter_power.mains_export",
+        "meter_power.ev_import",
+        "meter_power.ev_export",
+        "measure_current.l1",
+        "measure_current.l2",
+        "measure_current.l3",
+        "measure_current.ev_l1",
+        "measure_current.ev_l2",
+        "measure_current.ev_l3",
+        "measure_current.home_battery",
+        "measure_temperature.esp",
+        "nr_of_phases",
+        "max_current",
+        "max_sum_mains",
+        "max_sum_mains_time",
+        "ev_plug_state",
+        "charger_state",
+        "access",
+        "cable_lock",
+        "enable_c2",
+        "cp_pwm",
+        "cp_pwm_override",
+        "ev_soc_initial",
+        "ev_soc_full",
+        "ev_soc_computed",
+        "ev_soc_remaining",
+        "ev_time_until_full",
+        "ev_energy_capacity",
+        "ev_energy_request",
+        "evccid",
+        "required_evccid",
+        "rfid_status",
+        "rfid_last_read",
+        "led_color_off",
+        "led_color_normal",
+        "led_color_smart",
+        "led_color_solar",
+        "led_color_custom",
+        "custom_button",
+        "ocpp",
+        "ocpp_connection",
+        "wifi_ssid",
+        "wifi_bssid",
+        "measure_rssi",
+        "esp_uptime",
+        "load_bl",
+        "pairing_pin",
+        "solar_stop_timer",
+        "online",
+        "error"
+      ],
+      "energy": {
+        "evCharger": true
+      },
+      "pair": [
+        {
+          "id": "enter_prefix"
+        }
+      ]
+    }
+  ],
+  "capabilities": {
+    "access": {
+      "type": "enum",
+      "title": {
+        "en": "Access",
+        "nl": "Toegang"
+      },
+      "getable": true,
+      "setable": false,
+      "values": [
+        {
+          "id": "Allow",
+          "title": {
+            "en": "Allow",
+            "nl": "Toegestaan"
+          }
+        },
+        {
+          "id": "Deny",
+          "title": {
+            "en": "Deny",
+            "nl": "Geweigerd"
+          }
+        },
+        {
+          "id": "Pause",
+          "title": {
+            "en": "Pause",
+            "nl": "Pauze"
+          }
+        }
+      ]
+    },
+    "cable_lock": {
+      "type": "number",
+      "title": {
+        "en": "Cable lock",
+        "nl": "Kabelslot"
+      },
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "decimals": 0,
+      "getable": true,
+      "setable": true
+    },
+    "charge_current": {
+      "type": "number",
+      "title": {
+        "en": "Charge current",
+        "nl": "Laadstroom"
+      },
+      "units": {
+        "en": "A",
+        "nl": "A"
+      },
+      "min": 6,
+      "max": 32,
+      "step": 1,
+      "decimals": 0,
+      "getable": true,
+      "setable": true,
+      "uiComponent": "slider",
+      "insights": true
+    },
+    "charger_state": {
+      "type": "string",
+      "title": {
+        "en": "Charger state",
+        "nl": "Laderstatus"
+      },
+      "getable": true,
+      "setable": false
+    },
+    "cp_pwm": {
+      "type": "number",
+      "title": {
+        "en": "Control pilot PWM",
+        "nl": "CP PWM"
+      },
+      "decimals": 0,
+      "getable": true,
+      "setable": false
+    },
+    "cp_pwm_override": {
+      "type": "number",
+      "title": {
+        "en": "Control pilot PWM override",
+        "nl": "CP PWM override"
+      },
+      "decimals": 0,
+      "getable": true,
+      "setable": true
+    },
+    "custom_button": {
+      "type": "enum",
+      "title": {
+        "en": "Custom button",
+        "nl": "Aangepaste knop"
+      },
+      "getable": true,
+      "setable": true,
+      "values": [
+        {
+          "id": "On",
+          "title": {
+            "en": "On",
+            "nl": "Aan"
+          }
+        },
+        {
+          "id": "Off",
+          "title": {
+            "en": "Off",
+            "nl": "Uit"
+          }
+        }
+      ]
+    },
+    "enable_c2": {
+      "type": "enum",
+      "title": {
+        "en": "Phase contactor (C2)",
+        "nl": "Fasecontactor (C2)"
+      },
+      "getable": true,
+      "setable": true,
+      "values": [
+        {
+          "id": "Not present",
+          "title": {
+            "en": "Not present",
+            "nl": "Niet aanwezig"
+          }
+        },
+        {
+          "id": "Always Off",
+          "title": {
+            "en": "Always off",
+            "nl": "Altijd uit"
+          }
+        },
+        {
+          "id": "Solar Off",
+          "title": {
+            "en": "Off on solar",
+            "nl": "Uit bij zon"
+          }
+        },
+        {
+          "id": "Always On",
+          "title": {
+            "en": "Always on",
+            "nl": "Altijd aan"
+          }
+        },
+        {
+          "id": "Auto",
+          "title": {
+            "en": "Auto",
+            "nl": "Automatisch"
+          }
+        }
+      ]
+    },
+    "error": {
+      "type": "string",
+      "title": {
+        "en": "Error",
+        "nl": "Fout"
+      },
+      "getable": true,
+      "setable": false
+    },
+    "esp_uptime": {
+      "type": "number",
+      "title": {
+        "en": "Uptime",
+        "nl": "Uptime"
+      },
+      "units": {
+        "en": "s",
+        "nl": "s"
+      },
+      "decimals": 0,
+      "getable": true,
+      "setable": false
+    },
+    "ev_energy_capacity": {
+      "type": "number",
+      "title": {
+        "en": "Battery capacity",
+        "nl": "Accucapaciteit"
+      },
+      "units": {
+        "en": "kWh",
+        "nl": "kWh"
+      },
+      "decimals": 2,
+      "getable": true,
+      "setable": false
+    },
+    "ev_energy_request": {
+      "type": "number",
+      "title": {
+        "en": "Energy requested",
+        "nl": "Gevraagde energie"
+      },
+      "units": {
+        "en": "kWh",
+        "nl": "kWh"
+      },
+      "decimals": 2,
+      "getable": true,
+      "setable": false
+    },
+    "ev_plug_state": {
+      "type": "enum",
+      "title": {
+        "en": "Plug state",
+        "nl": "Stekkerstatus"
+      },
+      "getable": true,
+      "setable": false,
+      "values": [
+        {
+          "id": "Connected",
+          "title": {
+            "en": "Connected",
+            "nl": "Aangesloten"
+          }
+        },
+        {
+          "id": "Disconnected",
+          "title": {
+            "en": "Disconnected",
+            "nl": "Niet aangesloten"
+          }
+        }
+      ]
+    },
+    "ev_soc_computed": {
+      "type": "number",
+      "title": {
+        "en": "Computed state of charge",
+        "nl": "Berekende laadstatus"
+      },
+      "units": {
+        "en": "%",
+        "nl": "%"
+      },
+      "min": 0,
+      "max": 100,
+      "decimals": 0,
+      "getable": true,
+      "setable": false,
+      "insights": true
+    },
+    "ev_soc_full": {
+      "type": "number",
+      "title": {
+        "en": "Full state of charge",
+        "nl": "Volle laadstatus"
+      },
+      "units": {
+        "en": "%",
+        "nl": "%"
+      },
+      "min": 0,
+      "max": 100,
+      "decimals": 0,
+      "getable": true,
+      "setable": false
+    },
+    "ev_soc_initial": {
+      "type": "number",
+      "title": {
+        "en": "Initial state of charge",
+        "nl": "Begin-laadstatus"
+      },
+      "units": {
+        "en": "%",
+        "nl": "%"
+      },
+      "min": 0,
+      "max": 100,
+      "decimals": 0,
+      "getable": true,
+      "setable": false,
+      "insights": true
+    },
+    "ev_soc_remaining": {
+      "type": "number",
+      "title": {
+        "en": "Remaining state of charge",
+        "nl": "Resterende laadstatus"
+      },
+      "units": {
+        "en": "%",
+        "nl": "%"
+      },
+      "min": 0,
+      "max": 100,
+      "decimals": 0,
+      "getable": true,
+      "setable": false
+    },
+    "ev_time_until_full": {
+      "type": "number",
+      "title": {
+        "en": "Time until full",
+        "nl": "Tijd tot vol"
+      },
+      "units": {
+        "en": "min",
+        "nl": "min"
+      },
+      "decimals": 0,
+      "getable": true,
+      "setable": false
+    },
+    "evccid": {
+      "type": "string",
+      "title": {
+        "en": "EVCCID",
+        "nl": "EVCCID"
+      },
+      "getable": true,
+      "setable": false
+    },
+    "led_color_custom": {
+      "type": "string",
+      "title": {
+        "en": "LED colour — custom",
+        "nl": "LED-kleur — aangepast"
+      },
+      "getable": true,
+      "setable": false,
+      "hint": {
+        "en": "R,G,B (0-255)",
+        "nl": "R,G,B (0-255)"
+      }
+    },
+    "led_color_normal": {
+      "type": "string",
+      "title": {
+        "en": "LED colour — normal",
+        "nl": "LED-kleur — normaal"
+      },
+      "getable": true,
+      "setable": true,
+      "hint": {
+        "en": "R,G,B (0-255)",
+        "nl": "R,G,B (0-255)"
+      }
+    },
+    "led_color_off": {
+      "type": "string",
+      "title": {
+        "en": "LED colour — off",
+        "nl": "LED-kleur — uit"
+      },
+      "getable": true,
+      "setable": true,
+      "hint": {
+        "en": "R,G,B (0-255)",
+        "nl": "R,G,B (0-255)"
+      }
+    },
+    "led_color_smart": {
+      "type": "string",
+      "title": {
+        "en": "LED colour — smart",
+        "nl": "LED-kleur — slim"
+      },
+      "getable": true,
+      "setable": true,
+      "hint": {
+        "en": "R,G,B (0-255)",
+        "nl": "R,G,B (0-255)"
+      }
+    },
+    "led_color_solar": {
+      "type": "string",
+      "title": {
+        "en": "LED colour — solar",
+        "nl": "LED-kleur — zon"
+      },
+      "getable": true,
+      "setable": true,
+      "hint": {
+        "en": "R,G,B (0-255)",
+        "nl": "R,G,B (0-255)"
+      }
+    },
+    "load_bl": {
+      "type": "number",
+      "title": {
+        "en": "Load balancing role",
+        "nl": "Loadbalancing-rol"
+      },
+      "decimals": 0,
+      "getable": true,
+      "setable": false
+    },
+    "max_current": {
+      "type": "number",
+      "title": {
+        "en": "Maximum current",
+        "nl": "Maximale stroom"
+      },
+      "units": {
+        "en": "A",
+        "nl": "A"
+      },
+      "decimals": 1,
+      "getable": true,
+      "setable": false,
+      "insights": true
+    },
+    "max_sum_mains": {
+      "type": "number",
+      "title": {
+        "en": "Mains capacity limit",
+        "nl": "Netaansluiting limiet"
+      },
+      "units": {
+        "en": "A",
+        "nl": "A"
+      },
+      "min": 10,
+      "max": 600,
+      "step": 1,
+      "decimals": 0,
+      "getable": true,
+      "setable": true
+    },
+    "max_sum_mains_time": {
+      "type": "number",
+      "title": {
+        "en": "Mains overload time",
+        "nl": "Overschrijdingstijd"
+      },
+      "units": {
+        "en": "s",
+        "nl": "s"
+      },
+      "decimals": 0,
+      "getable": true,
+      "setable": false
+    },
+    "measure_rssi": {
+      "type": "number",
+      "title": {
+        "en": "Wi-Fi signal strength",
+        "nl": "Wi-Fi signaalsterkte"
+      },
+      "units": {
+        "en": "dBm",
+        "nl": "dBm"
+      },
+      "decimals": 0,
+      "getable": true,
+      "setable": false,
+      "insights": true
+    },
+    "mode": {
+      "type": "enum",
+      "title": {
+        "en": "Mode",
+        "nl": "Modus"
+      },
+      "getable": true,
+      "setable": true,
+      "insights": false,
+      "uiComponent": "picker",
+      "values": [
+        {
+          "id": "Off",
+          "title": {
+            "en": "Off",
+            "nl": "Uit"
+          }
+        },
+        {
+          "id": "Normal",
+          "title": {
+            "en": "Normal",
+            "nl": "Normaal"
+          }
+        },
+        {
+          "id": "Smart",
+          "title": {
+            "en": "Smart",
+            "nl": "Slim"
+          }
+        },
+        {
+          "id": "Solar",
+          "title": {
+            "en": "Solar",
+            "nl": "Zon"
+          }
+        },
+        {
+          "id": "Pause",
+          "title": {
+            "en": "Pause",
+            "nl": "Pauze"
+          }
+        }
+      ],
+      "icon": "/assets/icon.svg"
+    },
+    "nr_of_phases": {
+      "type": "enum",
+      "title": {
+        "en": "Number of phases",
+        "nl": "Aantal fasen"
+      },
+      "getable": true,
+      "setable": false,
+      "values": [
+        {
+          "id": "1",
+          "title": {
+            "en": "1-phase",
+            "nl": "1-fase"
+          }
+        },
+        {
+          "id": "3",
+          "title": {
+            "en": "3-phase",
+            "nl": "3-fase"
+          }
+        }
+      ]
+    },
+    "ocpp": {
+      "type": "string",
+      "title": {
+        "en": "OCPP",
+        "nl": "OCPP"
+      },
+      "getable": true,
+      "setable": false
+    },
+    "ocpp_connection": {
+      "type": "string",
+      "title": {
+        "en": "OCPP connection",
+        "nl": "OCPP-verbinding"
+      },
+      "getable": true,
+      "setable": false
+    },
+    "online": {
+      "type": "boolean",
+      "title": {
+        "en": "Online",
+        "nl": "Online"
+      },
+      "getable": true,
+      "setable": false
+    },
+    "pairing_pin": {
+      "type": "string",
+      "title": {
+        "en": "Pairing PIN",
+        "nl": "Koppelings-PIN"
+      },
+      "getable": true,
+      "setable": false
+    },
+    "required_evccid": {
+      "type": "string",
+      "title": {
+        "en": "Required EVCCID",
+        "nl": "Vereist EVCCID"
+      },
+      "getable": true,
+      "setable": true
+    },
+    "rfid_last_read": {
+      "type": "string",
+      "title": {
+        "en": "Last RFID read",
+        "nl": "Laatst gelezen RFID"
+      },
+      "getable": true,
+      "setable": false
+    },
+    "rfid_status": {
+      "type": "string",
+      "title": {
+        "en": "RFID status",
+        "nl": "RFID-status"
+      },
+      "getable": true,
+      "setable": false
+    },
+    "solar_stop_timer": {
+      "type": "number",
+      "title": {
+        "en": "Solar stop timer",
+        "nl": "Zonne-stop timer"
+      },
+      "units": {
+        "en": "s",
+        "nl": "s"
+      },
+      "decimals": 0,
+      "getable": true,
+      "setable": false
+    },
+    "wifi_bssid": {
+      "type": "string",
+      "title": {
+        "en": "Wi-Fi BSSID",
+        "nl": "Wi-Fi BSSID"
+      },
+      "getable": true,
+      "setable": false
+    },
+    "wifi_ssid": {
+      "type": "string",
+      "title": {
+        "en": "Wi-Fi SSID",
+        "nl": "Wi-Fi SSID"
+      },
+      "getable": true,
+      "setable": false
+    }
   }
 }

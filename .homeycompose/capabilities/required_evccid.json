@@ -1,0 +1,5 @@
+{
+  "type": "string",
+  "title": { "en": "Required EVCCID", "nl": "Vereist EVCCID" },
+  "getable": true, "setable": true
+}

@@ -1,0 +1,7 @@
+{
+  "type": "number",
+  "title": { "en": "Energy requested", "nl": "Gevraagde energie" },
+  "units": { "en": "kWh", "nl": "kWh" },
+  "decimals": 2,
+  "getable": true, "setable": false
+}

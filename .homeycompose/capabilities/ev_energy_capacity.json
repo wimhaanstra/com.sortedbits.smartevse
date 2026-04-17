@@ -1,0 +1,7 @@
+{
+  "type": "number",
+  "title": { "en": "Battery capacity", "nl": "Accucapaciteit" },
+  "units": { "en": "kWh", "nl": "kWh" },
+  "decimals": 2,
+  "getable": true, "setable": false
+}

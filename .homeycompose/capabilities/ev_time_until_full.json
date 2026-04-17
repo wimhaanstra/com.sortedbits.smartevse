@@ -1,0 +1,7 @@
+{
+  "type": "number",
+  "title": { "en": "Time until full", "nl": "Tijd tot vol" },
+  "units": { "en": "min", "nl": "min" },
+  "decimals": 0,
+  "getable": true, "setable": false
+}

@@ -1,0 +1,5 @@
+{
+  "type": "string",
+  "title": { "en": "Last RFID read", "nl": "Laatst gelezen RFID" },
+  "getable": true, "setable": false
+}

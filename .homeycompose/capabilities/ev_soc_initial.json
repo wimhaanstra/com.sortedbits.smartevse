@@ -1,0 +1,7 @@
+{
+  "type": "number",
+  "title": { "en": "Initial state of charge", "nl": "Begin-laadstatus" },
+  "units": { "en": "%", "nl": "%" },
+  "min": 0, "max": 100, "decimals": 0,
+  "getable": true, "setable": false, "insights": true
+}

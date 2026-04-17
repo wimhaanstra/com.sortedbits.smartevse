@@ -1,0 +1,9 @@
+{
+  "type": "enum",
+  "title": { "en": "Custom button", "nl": "Aangepaste knop" },
+  "getable": true, "setable": true,
+  "values": [
+    { "id": "On", "title": { "en": "On", "nl": "Aan" } },
+    { "id": "Off", "title": { "en": "Off", "nl": "Uit" } }
+  ]
+}

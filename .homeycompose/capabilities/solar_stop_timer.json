@@ -1,0 +1,6 @@
+{
+  "type": "number",
+  "title": { "en": "Solar stop timer", "nl": "Zonne-stop timer" },
+  "units": { "en": "s", "nl": "s" },
+  "decimals": 0, "getable": true, "setable": false
+}

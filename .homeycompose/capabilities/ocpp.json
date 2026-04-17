@@ -1,0 +1,5 @@
+{
+  "type": "string",
+  "title": { "en": "OCPP", "nl": "OCPP" },
+  "getable": true, "setable": false
+}

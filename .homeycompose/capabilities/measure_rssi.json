@@ -1,0 +1,6 @@
+{
+  "type": "number",
+  "title": { "en": "Wi-Fi signal strength", "nl": "Wi-Fi signaalsterkte" },
+  "units": { "en": "dBm", "nl": "dBm" },
+  "decimals": 0, "getable": true, "setable": false, "insights": true
+}

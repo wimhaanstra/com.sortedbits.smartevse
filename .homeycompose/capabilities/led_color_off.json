@@ -1,0 +1,6 @@
+{
+  "type": "string",
+  "title": { "en": "LED colour — off", "nl": "LED-kleur — uit" },
+  "getable": true, "setable": true,
+  "hint": { "en": "R,G,B (0-255)", "nl": "R,G,B (0-255)" }
+}

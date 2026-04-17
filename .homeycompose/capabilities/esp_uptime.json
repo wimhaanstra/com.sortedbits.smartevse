@@ -1,0 +1,6 @@
+{
+  "type": "number",
+  "title": { "en": "Uptime", "nl": "Uptime" },
+  "units": { "en": "s", "nl": "s" },
+  "decimals": 0, "getable": true, "setable": false
+}

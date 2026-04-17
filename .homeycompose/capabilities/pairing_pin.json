@@ -1,0 +1,5 @@
+{
+  "type": "string",
+  "title": { "en": "Pairing PIN", "nl": "Koppelings-PIN" },
+  "getable": true, "setable": false
+}

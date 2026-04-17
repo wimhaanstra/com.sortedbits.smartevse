@@ -1,0 +1,5 @@
+{
+  "type": "boolean",
+  "title": { "en": "Online", "nl": "Online" },
+  "getable": true, "setable": false
+}

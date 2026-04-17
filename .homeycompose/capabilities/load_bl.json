@@ -1,0 +1,5 @@
+{
+  "type": "number",
+  "title": { "en": "Load balancing role", "nl": "Loadbalancing-rol" },
+  "decimals": 0, "getable": true, "setable": false
+}

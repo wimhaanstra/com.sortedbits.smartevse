@@ -1,0 +1,5 @@
+{
+  "type": "string",
+  "title": { "en": "Wi-Fi BSSID", "nl": "Wi-Fi BSSID" },
+  "getable": true, "setable": false
+}

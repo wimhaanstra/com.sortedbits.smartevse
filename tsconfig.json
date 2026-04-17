@@ -3,7 +3,6 @@
   "compilerOptions": {
     "allowJs": true,
     "strict": true,
-    "noImplicitAny": true,
     "noUncheckedIndexedAccess": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,

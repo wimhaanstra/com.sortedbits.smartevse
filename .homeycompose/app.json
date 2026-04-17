@@ -1,0 +1,29 @@
+{
+  "id": "com.sortedbits.smartevse",
+  "version": "1.0.0",
+  "compatibility": ">=12.4.0",
+  "sdk": 3,
+  "runtime": "nodejs",
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "SmartEVSE"
+  },
+  "description": {
+    "en": "Full support for SmartEVSE"
+  },
+  "category": [
+    "energy"
+  ],
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Wim Haanstra",
+    "email": "wim@haanstra.io"
+  }
+}

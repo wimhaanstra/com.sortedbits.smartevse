@@ -1,0 +1,14 @@
+{
+  "extends": "@tsconfig/node16/tsconfig.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "noUncheckedIndexedAccess": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "outDir": ".homeybuild/"
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules", ".homeybuild", "test"]
+}

@@ -5,16 +5,17 @@
   "compatibility": ">=12.13.0",
   "sdk": 3,
   "runtime": "nodejs",
+  "brandColor": "#1cc88a",
   "platforms": [
     "local"
   ],
   "name": {
-    "en": "SmartEVSE",
-    "nl": "SmartEVSE"
+    "en": "SmartEVSE via MQTT",
+    "nl": "SmartEVSE via MQTT"
   },
   "description": {
-    "en": "Full support for SmartEVSE",
-    "nl": "Volledige ondersteuning voor SmartEVSE"
+    "en": "Full support for SmartEVSE via MQTT",
+    "nl": "Volledige ondersteuning voor SmartEVSE via MQTT"
   },
   "category": [
     "energy"
@@ -46,7 +47,7 @@
               "nl": "Status"
             },
             "example": {
-              "en": "State C, Charging"
+              "en": "Charging, Connected"
             }
           }
         ],

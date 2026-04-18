@@ -13,17 +13,17 @@ Build a Homey SDK v3 app that exposes a SmartEVSE-3 charger to Homey as a full-f
 
 ## 2. Scope decisions (from brainstorming)
 
-| # | Decision | Choice |
-|---|---|---|
-| Q1 | Device model | Multi-device, broker credentials at app level |
-| Q2 | Broker transport | TCP + TLS + WebSockets (ws/wss), username/password optional |
-| Q3 | Mode ↔ `evcharger_charging` | Toggle pauses/resumes (`Normal` ↔ `Pause`); separate Mode picker for Normal/Smart/Solar/Off/Pause |
-| Q4 | Charge-current control | Expose **both** `target_power` (W) and custom `charge_current` (A) |
-| Q5 | Meter feeding | Flow actions for `feed_mains_meter`, `feed_ev_meter`, `feed_home_battery_current` |
-| Q6 | Capability surface | Every documented telemetry value is a visible capability |
-| Q7 | Pairing | Manual form (name + topic prefix), validated via `{prefix}/connected` within 5 s |
-| Q8 | Tests | Unit only, Jest + ts-jest, `mqtt.js` mocked |
-| extra | i18n | EN + NL for all user-facing strings |
+| #     | Decision                    | Choice                                                                                            |
+| ----- | --------------------------- | ------------------------------------------------------------------------------------------------- |
+| Q1    | Device model                | Multi-device, broker credentials at app level                                                     |
+| Q2    | Broker transport            | TCP + TLS + WebSockets (ws/wss), username/password optional                                       |
+| Q3    | Mode ↔ `evcharger_charging` | Toggle pauses/resumes (`Normal` ↔ `Pause`); separate Mode picker for Normal/Smart/Solar/Off/Pause |
+| Q4    | Charge-current control      | Expose **both** `target_power` (W) and custom `charge_current` (A)                                |
+| Q5    | Meter feeding               | Flow actions for `feed_mains_meter`, `feed_ev_meter`, `feed_home_battery_current`                 |
+| Q6    | Capability surface          | Every documented telemetry value is a visible capability                                          |
+| Q7    | Pairing                     | Manual form (name + topic prefix), validated via `{prefix}/connected` within 5 s                  |
+| Q8    | Tests                       | Unit only, Jest + ts-jest, `mqtt.js` mocked                                                       |
+| extra | i18n                        | EN + NL for all user-facing strings                                                               |
 
 ## 3. Architecture
 
@@ -120,62 +120,62 @@ com.sortedbits.smartevse/
 
 ### 5.1 Homey-native capabilities
 
-| Capability | Type | Writable | Source |
-|---|---|---|---|
-| `evcharger_charging` | bool | yes | Derived: `Mode !== Pause && Mode !== Off`. Write → `/Set/Mode` (`Normal` or `Pause`) |
-| `evcharger_charging_state` | enum | no | Derived from `{EVPlugState, State, Mode}` |
-| `measure_power` | W | no | `/EVChargePower` |
-| `target_power` | W | yes | Write → `/Set/CurrentOverride` (W / (230 × NrOfPhases) × 10) |
-| `target_power_mode` | enum | (built-in) | Managed by Homey when Flow sets `target_power` |
-| `meter_power.charged` | kWh | no | `/EVEnergyCharged` (session) |
-| `meter_power.total_charged` | kWh | no | `/EVTotalEnergyCharged` |
-| `meter_power.mains_import` | kWh | no | `/MainsImportActiveEnergy` |
-| `meter_power.mains_export` | kWh | no | `/MainsExportActiveEnergy` |
-| `meter_power.ev_import` | kWh | no | `/EVImportActiveEnergy` |
-| `meter_power.ev_export` | kWh | no | `/EVExportActiveEnergy` |
-| `measure_current.l1` / `.l2` / `.l3` | A | no | `/MainsCurrentL{1,2,3}` (÷10) |
-| `measure_current.ev_l1` / `.ev_l2` / `.ev_l3` | A | no | `/EVCurrentL{1,2,3}` (÷10) |
-| `measure_current.home_battery` | A | no | `/HomeBatteryCurrent` |
-| `measure_temperature.esp` | °C | no | `/ESPTemp` |
+| Capability                                    | Type | Writable   | Source                                                                               |
+| --------------------------------------------- | ---- | ---------- | ------------------------------------------------------------------------------------ |
+| `evcharger_charging`                          | bool | yes        | Derived: `Mode !== Pause && Mode !== Off`. Write → `/Set/Mode` (`Normal` or `Pause`) |
+| `evcharger_charging_state`                    | enum | no         | Derived from `{EVPlugState, State, Mode}`                                            |
+| `measure_power`                               | W    | no         | `/EVChargePower`                                                                     |
+| `target_power`                                | W    | yes        | Write → `/Set/CurrentOverride` (W / (230 × NrOfPhases) × 10)                         |
+| `target_power_mode`                           | enum | (built-in) | Managed by Homey when Flow sets `target_power`                                       |
+| `meter_power.charged`                         | kWh  | no         | `/EVEnergyCharged` (session)                                                         |
+| `meter_power.total_charged`                   | kWh  | no         | `/EVTotalEnergyCharged`                                                              |
+| `meter_power.mains_import`                    | kWh  | no         | `/MainsImportActiveEnergy`                                                           |
+| `meter_power.mains_export`                    | kWh  | no         | `/MainsExportActiveEnergy`                                                           |
+| `meter_power.ev_import`                       | kWh  | no         | `/EVImportActiveEnergy`                                                              |
+| `meter_power.ev_export`                       | kWh  | no         | `/EVExportActiveEnergy`                                                              |
+| `measure_current.l1` / `.l2` / `.l3`          | A    | no         | `/MainsCurrentL{1,2,3}` (÷10)                                                        |
+| `measure_current.ev_l1` / `.ev_l2` / `.ev_l3` | A    | no         | `/EVCurrentL{1,2,3}` (÷10)                                                           |
+| `measure_current.home_battery`                | A    | no         | `/HomeBatteryCurrent`                                                                |
+| `measure_temperature.esp`                     | °C   | no         | `/ESPTemp`                                                                           |
 
 ### 5.2 Custom capabilities
 
 All custom capabilities ship with EN + NL titles and enum value titles.
 
-| Capability | Type | Writable | Values / units | Source |
-|---|---|---|---|---|
-| `mode` | enum | yes | `Off`, `Normal`, `Smart`, `Solar`, `Pause` | `/Mode` ↔ `/Set/Mode` |
-| `charge_current` | number (A) | yes | 6-32 | `/ChargeCurrentOverride` ↔ `/Set/CurrentOverride` |
-| `nr_of_phases` | enum | no | `1`, `3` | `/NrOfPhases` |
-| `max_current` | A | no | — | `/MaxCurrent` (÷10) |
-| `max_sum_mains` | A | yes | 10-600 | `/MaxSumMains` ↔ `/Set/CurrentMaxSumMains` |
-| `max_sum_mains_time` | s | no | — | `/MaxSumMainsTime` |
-| `ev_plug_state` | enum | no | `Connected`, `Disconnected` | `/EVPlugState` |
-| `charger_state` | text | no | raw state string | `/State` |
-| `access` | enum | no | `Allow`, `Deny`, `Pause` | `/Access` |
-| `cable_lock` | enum | yes | 0-4 (firmware values) | `/CableLock` ↔ `/Set/CableLock` |
-| `enable_c2` | enum | yes | `Not present`, `Always Off`, `Solar Off`, `Always On`, `Auto` | `/EnableC2` ↔ `/Set/EnableC2` |
-| `cp_pwm` | number | no | — | `/CPPWM` |
-| `cp_pwm_override` | number | yes | — | `/CPPWMOverride` ↔ `/Set/CPPWMOverride` |
-| `ev_soc_initial` / `_full` / `_computed` / `_remaining` | % | no | 0-100 | `/EVInitialSoC` … |
-| `ev_time_until_full` | min | no | — | `/EVTimeUntilFull` |
-| `ev_energy_capacity` / `_request` | kWh | no | — | `/EVEnergyCapacity`, `/EVEnergyRequest` |
-| `evccid` | text | no | — | `/EVCCID` |
-| `required_evccid` | text | yes | — | `/Set/RequiredEVCCID` |
-| `rfid_status` | text | no | — | `/RFID` |
-| `rfid_last_read` | text | no | hex | `/RFIDLastRead` |
-| `led_color_off`/`_normal`/`_smart`/`_solar`/`_custom` | text | yes | `R,G,B` | read `/LEDColorX`, write `/Set/ColorX` |
-| `custom_button` | enum | yes | `On`, `Off` | `/CustomButton` |
-| `ocpp` | enum | no | `Enabled`, `Disabled` | `/OCPP` |
-| `ocpp_connection` | enum | no | `Connected`, `Disconnected` | `/OCPPConnection` |
-| `wifi_ssid` / `wifi_bssid` | text | no | — | `/WiFiSSID`, `/WiFiBSSID` |
-| `measure_rssi` | dBm | no | — | `/WiFiRSSI` |
-| `esp_uptime` | s | no | — | `/ESPUptime` |
-| `load_bl` | number | no | — | `/LoadBl` |
-| `pairing_pin` | text | no | — | `/PairingPin` |
-| `solar_stop_timer` | s | no | — | `/SolarStopTimer` |
-| `online` | bool | no | availability flag | `/connected` LWT |
-| `error` | text | no | firmware error string | `/Error` |
+| Capability                                              | Type       | Writable | Values / units                                                | Source                                            |
+| ------------------------------------------------------- | ---------- | -------- | ------------------------------------------------------------- | ------------------------------------------------- |
+| `mode`                                                  | enum       | yes      | `Off`, `Normal`, `Smart`, `Solar`, `Pause`                    | `/Mode` ↔ `/Set/Mode`                             |
+| `charge_current`                                        | number (A) | yes      | 6-32                                                          | `/ChargeCurrentOverride` ↔ `/Set/CurrentOverride` |
+| `nr_of_phases`                                          | enum       | no       | `1`, `3`                                                      | `/NrOfPhases`                                     |
+| `max_current`                                           | A          | no       | —                                                             | `/MaxCurrent` (÷10)                               |
+| `max_sum_mains`                                         | A          | yes      | 10-600                                                        | `/MaxSumMains` ↔ `/Set/CurrentMaxSumMains`        |
+| `max_sum_mains_time`                                    | s          | no       | —                                                             | `/MaxSumMainsTime`                                |
+| `ev_plug_state`                                         | enum       | no       | `Connected`, `Disconnected`                                   | `/EVPlugState`                                    |
+| `charger_state`                                         | text       | no       | raw state string                                              | `/State`                                          |
+| `access`                                                | enum       | no       | `Allow`, `Deny`, `Pause`                                      | `/Access`                                         |
+| `cable_lock`                                            | enum       | yes      | 0-4 (firmware values)                                         | `/CableLock` ↔ `/Set/CableLock`                   |
+| `enable_c2`                                             | enum       | yes      | `Not present`, `Always Off`, `Solar Off`, `Always On`, `Auto` | `/EnableC2` ↔ `/Set/EnableC2`                     |
+| `cp_pwm`                                                | number     | no       | —                                                             | `/CPPWM`                                          |
+| `cp_pwm_override`                                       | number     | yes      | —                                                             | `/CPPWMOverride` ↔ `/Set/CPPWMOverride`           |
+| `ev_soc_initial` / `_full` / `_computed` / `_remaining` | %          | no       | 0-100                                                         | `/EVInitialSoC` …                                 |
+| `ev_time_until_full`                                    | min        | no       | —                                                             | `/EVTimeUntilFull`                                |
+| `ev_energy_capacity` / `_request`                       | kWh        | no       | —                                                             | `/EVEnergyCapacity`, `/EVEnergyRequest`           |
+| `evccid`                                                | text       | no       | —                                                             | `/EVCCID`                                         |
+| `required_evccid`                                       | text       | yes      | —                                                             | `/Set/RequiredEVCCID`                             |
+| `rfid_status`                                           | text       | no       | —                                                             | `/RFID`                                           |
+| `rfid_last_read`                                        | text       | no       | hex                                                           | `/RFIDLastRead`                                   |
+| `led_color_off`/`_normal`/`_smart`/`_solar`/`_custom`   | text       | yes      | `R,G,B`                                                       | read `/LEDColorX`, write `/Set/ColorX`            |
+| `custom_button`                                         | enum       | yes      | `On`, `Off`                                                   | `/CustomButton`                                   |
+| `ocpp`                                                  | enum       | no       | `Enabled`, `Disabled`                                         | `/OCPP`                                           |
+| `ocpp_connection`                                       | enum       | no       | `Connected`, `Disconnected`                                   | `/OCPPConnection`                                 |
+| `wifi_ssid` / `wifi_bssid`                              | text       | no       | —                                                             | `/WiFiSSID`, `/WiFiBSSID`                         |
+| `measure_rssi`                                          | dBm        | no       | —                                                             | `/WiFiRSSI`                                       |
+| `esp_uptime`                                            | s          | no       | —                                                             | `/ESPUptime`                                      |
+| `load_bl`                                               | number     | no       | —                                                             | `/LoadBl`                                         |
+| `pairing_pin`                                           | text       | no       | —                                                             | `/PairingPin`                                     |
+| `solar_stop_timer`                                      | s          | no       | —                                                             | `/SolarStopTimer`                                 |
+| `online`                                                | bool       | no       | availability flag                                             | `/connected` LWT                                  |
+| `error`                                                 | text       | no       | firmware error string                                         | `/Error`                                          |
 
 ### 5.3 Derived-capability rules
 
@@ -191,11 +191,13 @@ All custom capabilities ship with EN + NL titles and enum value titles.
 ## 6. Flow cards
 
 ### 6.1 Auto-generated from capabilities
+
 Homey generates triggers, conditions, and actions for every writable capability. No manual wiring needed.
 
 ### 6.2 Custom Flow cards
 
 **Actions**
+
 - `feed_mains_meter(l1, l2, l3: A)` — publishes `/Set/MainsMeter` = `"${L1*10}:${L2*10}:${L3*10}"`
 - `feed_ev_meter(l1, l2, l3: A, power: W, energy: Wh)` — publishes `/Set/EVMeter` = `"${L1*10}:${L2*10}:${L3*10}:${P}:${E}"`
 - `feed_home_battery_current(a: A)` — publishes `/Set/HomeBatteryCurrent` (deci-A)
@@ -203,11 +205,13 @@ Homey generates triggers, conditions, and actions for every writable capability.
 - `set_led_color(slot: Off|Normal|Smart|Solar, r, g, b: 0-255)`
 
 **Triggers**
+
 - `rfid_swiped(uid)` — fires when `/RFIDLastRead` changes
 - `error_changed(code)` — fires when `/Error` changes to a non-"NOERROR" value
 - `charger_state_changed(state)` — fires when `/State` changes
 
 **Conditions**
+
 - Auto-generated from `evcharger_charging`, `ev_plug_state`, `mode`, `error`.
 
 ## 7. Data flow
@@ -248,24 +252,28 @@ user / Flow ──▶ setCapabilityValue('mode', 'Smart')
 ## 8. Error handling
 
 ### Broker-level
+
 - **Connect failure / bad creds** → log, set all devices' `online = false`, `setUnavailable(i18n('broker_disconnected'))`. Exponential-backoff retry (1 → 2 → 4 … → 60 s) via `mqtt.js` `reconnectPeriod`. Settings page shows "Broker status: Connected / Retrying / Error".
 - **TLS handshake failure** → distinguish "Certificate invalid" vs "Auth failed" in settings page.
 - **WebSocket upgrade failure** → logged; no auto-fallback.
 - **No broker configured** → `Driver.onPair` refuses with a localised message.
 
 ### Device-level
+
 - **LWT `/connected = offline`** → `online = false` + `setUnavailable`. Returns to available on `online`.
 - **Prefix validation timeout during pair (5 s)** → pair view shows error + Retry. No half-created device.
 - **Unknown topic suffix** → `debug` log; ignored (forward compatibility).
 - **Malformed payload** → codec returns `null`; capability not updated; warning logged once per (topic, payload-hash) per session.
 
 ### Control-path errors
+
 - **Out-of-range `target_power`** → clamp to `[excludeMax, max]`, round to 230 W. Below `excludeMax` → publishes Mode = Pause instead.
 - **Write before `nr_of_phases` known** → queue up to 10 s; fall back to 1-phase assumption.
 - **Publish while disconnected** → `mqtt.js` `queueQoSZero: true` queues; flushed on reconnect.
 - **Flow-action bad payload** → action throws a user-visible error.
 
 ### App lifecycle
+
 - **Uninstall / re-init** → `MqttHub.close()` cleanly disconnects; `onDeleted` unsubscribes.
 - **Settings changed at runtime** → hub reconnects with new creds; devices re-subscribe on reconnect.
 
@@ -285,7 +293,7 @@ user / Flow ──▶ setCapabilityValue('mode', 'Smart')
   - `evcharger_charging` across every Mode value.
 - `mqtt-hub.test.ts` (mocks `mqtt` via `jest.mock('mqtt')`)
   - Subscribe → routes to correct device by prefix.
-  - Two devices with overlapping prefixes (`SmartEVSE/8881` vs `SmartEVSE/8881-test`) route correctly.
+  - Two devices with overlapping prefixes (`SmartEVSE/1234` vs `SmartEVSE/1234-test`) route correctly.
   - LWT delivered to device handler.
   - Reconnect re-subscribes all registered prefixes.
   - Publish while disconnected queues and flushes on reconnect.
@@ -308,25 +316,27 @@ user / Flow ──▶ setCapabilityValue('mode', 'Smart')
 
 ### NL glossary (selected)
 
-| EN | NL |
-|---|---|
-| Mode | Modus |
-| EV Plug State | Stekkerstatus |
-| Cable Lock | Kabelslot |
-| Access | Toegang |
+| EN               | NL               |
+| ---------------- | ---------------- |
+| Mode             | Modus            |
+| EV Plug State    | Stekkerstatus    |
+| Cable Lock       | Kabelslot        |
+| Access           | Toegang          |
 | Solar Stop Timer | Zonne-stop timer |
-| Charge Current | Laadstroom |
-| Charger State | Laderstatus |
-| Required EVCCID | Vereist EVCCID |
-| Error | Fout |
+| Charge Current   | Laadstroom       |
+| Charger State    | Laderstatus      |
+| Required EVCCID  | Vereist EVCCID   |
+| Error            | Fout             |
 
 ## 11. Dependencies
 
 ### Runtime
+
 - `mqtt` ^5.x (latest `mqtt.js`)
 - `homey` (provided by Homey SDK v3, already present)
 
 ### Dev
+
 - `typescript` (latest 5.x — note: existing `package.json` references a non-existent 6.x; correct to current stable during implementation)
 - `@types/node`
 - `jest` ^29 + `ts-jest` ^29 + `@types/jest`

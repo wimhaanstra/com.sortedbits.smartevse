@@ -124,7 +124,7 @@ module.exports = class SmartEvseDevice extends Homey.Device {
     });
     this.setCapabilityValue('evcharger_charging_state', cs).catch(() => {});
 
-    const charging = deriveIsCharging(this.lastMode);
+    const charging = deriveIsCharging(this.lastMode, this.lastState);
     this.setCapabilityValue('evcharger_charging', charging).catch(() => {});
 
     const cap = this.getCapabilityValue('charge_current') as number | undefined;

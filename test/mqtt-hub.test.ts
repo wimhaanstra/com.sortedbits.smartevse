@@ -75,8 +75,8 @@ describe('MqttHub', () => {
     const p = hub.connect({ protocol: 'mqtt', host: 'h', port: 1883 });
     const c = connectIt();
     await p;
-    await hub.publish('SmartEVSE/8881', 'Set/Mode', 'Smart');
-    expect(c.publish).toHaveBeenCalledWith('SmartEVSE/8881/Set/Mode', 'Smart',
+    await hub.publish('SmartEVSE/1234', 'Set/Mode', 'Smart');
+    expect(c.publish).toHaveBeenCalledWith('SmartEVSE/1234/Set/Mode', 'Smart',
       expect.objectContaining({ qos: 0, retain: false }), expect.any(Function));
   });
 
@@ -99,13 +99,13 @@ describe('MqttHub routing', () => {
 
     const msgs: Array<[string, string]> = [];
     hub.subscribe({
-      prefix: 'SmartEVSE/8881',
+      prefix: 'SmartEVSE/1234',
       onMessage: (s, v) => msgs.push([s, v]),
       onOnline: () => {},
     });
-    expect(c.subscribe).toHaveBeenCalledWith('SmartEVSE/8881/#', { qos: 0 }, expect.any(Function));
+    expect(c.subscribe).toHaveBeenCalledWith('SmartEVSE/1234/#', { qos: 0 }, expect.any(Function));
 
-    c.emit('message', 'SmartEVSE/8881/Mode', Buffer.from('Smart'));
+    c.emit('message', 'SmartEVSE/1234/Mode', Buffer.from('Smart'));
     expect(msgs).toEqual([['Mode', 'Smart']]);
   });
 
@@ -117,12 +117,12 @@ describe('MqttHub routing', () => {
 
     const online: boolean[] = [];
     hub.subscribe({
-      prefix: 'SmartEVSE/8881',
+      prefix: 'SmartEVSE/1234',
       onMessage: () => {},
       onOnline: (o) => online.push(o),
     });
-    c.emit('message', 'SmartEVSE/8881/connected', Buffer.from('online'));
-    c.emit('message', 'SmartEVSE/8881/connected', Buffer.from('offline'));
+    c.emit('message', 'SmartEVSE/1234/connected', Buffer.from('online'));
+    c.emit('message', 'SmartEVSE/1234/connected', Buffer.from('offline'));
     expect(online).toEqual([true, false]);
   });
 
@@ -134,14 +134,14 @@ describe('MqttHub routing', () => {
 
     const shortMsgs: string[] = [];
     const longMsgs: string[] = [];
-    hub.subscribe({ prefix: 'SmartEVSE/8881', onMessage: (s) => shortMsgs.push(s), onOnline: () => {} });
-    hub.subscribe({ prefix: 'SmartEVSE/8881-test', onMessage: (s) => longMsgs.push(s), onOnline: () => {} });
+    hub.subscribe({ prefix: 'SmartEVSE/1234', onMessage: (s) => shortMsgs.push(s), onOnline: () => {} });
+    hub.subscribe({ prefix: 'SmartEVSE/1234-test', onMessage: (s) => longMsgs.push(s), onOnline: () => {} });
 
-    c.emit('message', 'SmartEVSE/8881-test/Mode', Buffer.from('Smart'));
+    c.emit('message', 'SmartEVSE/1234-test/Mode', Buffer.from('Smart'));
     expect(longMsgs).toEqual(['Mode']);
     expect(shortMsgs).toEqual([]);
 
-    c.emit('message', 'SmartEVSE/8881/Mode', Buffer.from('Normal'));
+    c.emit('message', 'SmartEVSE/1234/Mode', Buffer.from('Normal'));
     expect(shortMsgs).toEqual(['Mode']);
   });
 
@@ -153,12 +153,12 @@ describe('MqttHub routing', () => {
 
     c.connected = false;
     c.emit('offline');
-    await hub.publish('SmartEVSE/8881', 'Set/Mode', 'Smart');
+    await hub.publish('SmartEVSE/1234', 'Set/Mode', 'Smart');
     expect(c.publish).not.toHaveBeenCalled();
 
     c.connected = true;
     c.emit('connect');
-    expect(c.publish).toHaveBeenCalledWith('SmartEVSE/8881/Set/Mode', 'Smart',
+    expect(c.publish).toHaveBeenCalledWith('SmartEVSE/1234/Set/Mode', 'Smart',
       expect.objectContaining({ qos: 0, retain: false }), expect.any(Function));
   });
 

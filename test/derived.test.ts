@@ -2,12 +2,14 @@ import { deriveChargingState, deriveIsCharging, deriveTargetPower } from '../lib
 
 describe('deriveChargingState', () => {
   test.each([
-    [{ plug: 'Disconnected', state: 'State A', mode: 'Normal' }, 'plugged_out'],
-    [{ plug: 'Connected', state: 'State C, Charging', mode: 'Normal' }, 'plugged_in_charging'],
+    [{ plug: 'Disconnected', state: 'Charging', mode: 'Normal' }, 'plugged_out'],
+    [{ plug: 'Connected', state: 'Charging', mode: 'Normal' }, 'plugged_in_charging'],
     [{ plug: 'Connected', state: 'Charging', mode: 'Smart' }, 'plugged_in_charging'],
     [{ plug: 'Connected', state: 'Charging Stopped', mode: 'Smart' }, 'plugged_in'],
     [{ plug: 'Connected', state: 'Charging Stopped', mode: 'Pause' }, 'plugged_in_paused'],
+    [{ plug: 'Connected', state: 'Charging Stopped', mode: 'Off' }, 'plugged_in_paused'],
     [{ plug: 'Connected', state: 'State B', mode: 'Pause' }, 'plugged_in_paused'],
+    [{ plug: 'Connected', state: 'State B', mode: 'Off' }, 'plugged_in_paused'],
     [{ plug: 'Connected', state: 'State B', mode: 'Normal' }, 'plugged_in'],
     [{ plug: 'Connected', state: 'State B', mode: 'Smart' }, 'plugged_in'],
   ] as const)('%o → %s', (ctx, expected) => {
@@ -20,12 +22,15 @@ describe('deriveChargingState', () => {
 });
 
 describe('deriveIsCharging', () => {
-  test('Normal → true', () => expect(deriveIsCharging('Normal')).toBe(true));
-  test('Smart → true', () => expect(deriveIsCharging('Smart')).toBe(true));
-  test('Solar → true', () => expect(deriveIsCharging('Solar')).toBe(true));
-  test('Pause → false', () => expect(deriveIsCharging('Pause')).toBe(false));
-  test('Off → false', () => expect(deriveIsCharging('Off')).toBe(false));
-  test('undefined → false', () => expect(deriveIsCharging(undefined)).toBe(false));
+  test('Normal + Charging → true', () => expect(deriveIsCharging('Normal', 'Charging')).toBe(true));
+  test('Smart + Charging → true', () => expect(deriveIsCharging('Smart', 'Charging')).toBe(true));
+  test('Solar + Charging → true', () => expect(deriveIsCharging('Solar', 'Charging')).toBe(true));
+  test('Smart + Connected to EV → false', () => expect(deriveIsCharging('Smart', 'Connected to EV')).toBe(false));
+  test('Smart + Charging Stopped → false', () => expect(deriveIsCharging('Smart', 'Charging Stopped')).toBe(false));
+  test('Pause + Charging → false', () => expect(deriveIsCharging('Pause', 'Charging')).toBe(false));
+  test('Off + Charging → false', () => expect(deriveIsCharging('Off', 'Charging')).toBe(false));
+  test('undefined mode → false', () => expect(deriveIsCharging(undefined, 'Charging')).toBe(false));
+  test('undefined state → false', () => expect(deriveIsCharging('Smart', undefined)).toBe(false));
 });
 
 describe('deriveTargetPower', () => {

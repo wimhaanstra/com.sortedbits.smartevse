@@ -19,7 +19,7 @@
     "title": "Add a SmartEVSE",
     "name": "Device name",
     "prefix": "Topic prefix",
-    "prefix_hint": "e.g. SmartEVSE/8881",
+    "prefix_hint": "e.g. SmartEVSE/1234",
     "test": "Test connection",
     "ok": "Device is online",
     "timeout": "No response within 5 seconds",

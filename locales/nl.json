@@ -19,7 +19,7 @@
     "title": "SmartEVSE toevoegen",
     "name": "Apparaatnaam",
     "prefix": "Topic-prefix",
-    "prefix_hint": "bijv. SmartEVSE/8881",
+    "prefix_hint": "bijv. SmartEVSE/1234",
     "test": "Verbinding testen",
     "ok": "Apparaat is online",
     "timeout": "Geen reactie binnen 5 seconden",

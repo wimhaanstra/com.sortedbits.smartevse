@@ -4,6 +4,7 @@
   "compatibility": ">=12.13.0",
   "sdk": 3,
   "runtime": "nodejs",
+  "brandColor": "#1cc88a",
   "platforms": [
     "local"
   ],

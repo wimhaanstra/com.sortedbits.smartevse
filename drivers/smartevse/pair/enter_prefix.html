@@ -3,31 +3,42 @@
 </header>
 <fieldset class="homey-form-fieldset">
   <div class="homey-form-group">
-    <label class="homey-form-label" for="name" data-i18n="pair.name">Device name</label>
+    <label class="homey-form-label" for="name" data-i18n="pair.name"
+      >Device name</label
+    >
     <input id="name" type="text" class="homey-form-input" value="SmartEVSE" />
   </div>
   <div class="homey-form-group">
-    <label class="homey-form-label" for="prefix" data-i18n="pair.prefix">Topic prefix</label>
-    <input id="prefix" type="text" class="homey-form-input" placeholder="SmartEVSE/8881" />
+    <label class="homey-form-label" for="prefix" data-i18n="pair.prefix"
+      >Topic prefix</label
+    >
+    <input
+      id="prefix"
+      type="text"
+      class="homey-form-input"
+      placeholder="SmartEVSE/1234"
+    />
     <small class="homey-form-help" data-i18n="pair.prefix_hint"></small>
   </div>
   <p id="status" class="homey-text-small"></p>
-  <button id="testBtn" class="homey-button-primary-full" data-i18n="pair.test">Test connection</button>
+  <button id="testBtn" class="homey-button-primary-full" data-i18n="pair.test">
+    Test connection
+  </button>
 </fieldset>
 <script>
-  const statusEl = document.getElementById('status');
-  const btn = document.getElementById('testBtn');
-  btn.addEventListener('click', async () => {
-    statusEl.textContent = '…';
-    const name = document.getElementById('name').value.trim();
-    const prefix = document.getElementById('prefix').value.trim();
+  const statusEl = document.getElementById("status");
+  const btn = document.getElementById("testBtn");
+  btn.addEventListener("click", async () => {
+    statusEl.textContent = "…";
+    const name = document.getElementById("name").value.trim();
+    const prefix = document.getElementById("prefix").value.trim();
     try {
-      await Homey.emit('validate', { prefix });
-      statusEl.textContent = Homey.__('pair.ok');
+      await Homey.emit("validate", { prefix });
+      statusEl.textContent = Homey.__("pair.ok");
       Homey.createDevice({ name, data: { id: prefix }, settings: { prefix } });
       Homey.done();
     } catch (err) {
-      statusEl.textContent = err.message || Homey.__('pair.timeout');
+      statusEl.textContent = err.message || Homey.__("pair.timeout");
     }
   });
 </script>

@@ -149,6 +149,10 @@
           "en": "Mode !{{is|isn't}} [[mode]]",
           "nl": "Modus !{{is|is niet}} [[mode]]"
         },
+        "titleFormatted": {
+          "en": "Mode is [[mode]]",
+          "nl": "Modus is [[mode]]"
+        },
         "args": [
           {
             "name": "device",
@@ -635,9 +639,9 @@
         "lan"
       ],
       "images": {
-        "small": "/drivers/smartevse/assets/small.png",
-        "large": "/drivers/smartevse/assets/large.png",
-        "xlarge": "/drivers/smartevse/assets/xlarge.png"
+        "small": "/drivers/smartevse/assets/images/small.png",
+        "large": "/drivers/smartevse/assets/images/large.png",
+        "xlarge": "/drivers/smartevse/assets/images/xlarge.png"
       },
       "capabilities": [
         "evcharger_charging",
@@ -788,7 +792,8 @@
         }
       },
       "energy": {
-        "evCharger": true
+        "evCharger": true,
+        "meterPowerImportedCapability": "meter_power.ev_import"
       },
       "pair": [
         {

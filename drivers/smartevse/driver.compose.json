@@ -5,9 +5,9 @@
   "platforms": ["local"],
   "connectivity": ["lan"],
   "images": {
-    "small": "/drivers/smartevse/assets/small.png",
-    "large": "/drivers/smartevse/assets/large.png",
-    "xlarge": "/drivers/smartevse/assets/xlarge.png"
+    "small": "/drivers/smartevse/assets/images/small.png",
+    "large": "/drivers/smartevse/assets/images/large.png",
+    "xlarge": "/drivers/smartevse/assets/images/xlarge.png"
   },
   "capabilities": [
     "evcharger_charging",
@@ -88,7 +88,8 @@
     "measure_temperature.esp": { "title": { "en": "Controller", "nl": "Controller" } }
   },
   "energy": {
-    "evCharger": true
+    "evCharger": true,
+    "meterPowerImportedCapability": "meter_power.ev_import"
   },
   "pair": [
     { "id": "enter_prefix" }

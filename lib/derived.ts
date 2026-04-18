@@ -8,7 +8,8 @@ export interface ChargingStateInputs {
 
 export function deriveChargingState({ plug, state, mode }: ChargingStateInputs): ChargingState {
   if (plug !== 'Connected') return 'plugged_out';
-  if (state?.toUpperCase().startsWith('STATE C')) return 'plugged_in_charging';
+  const s = state?.toUpperCase();
+  if (s === 'CHARGING') return 'plugged_in_charging';
   if (mode === 'Pause') return 'plugged_in_paused';
   return 'plugged_in';
 }

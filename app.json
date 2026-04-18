@@ -700,6 +700,92 @@
         "online",
         "error"
       ],
+      "capabilitiesOptions": {
+        "measure_current.l1": {
+          "title": {
+            "en": "Mains L1",
+            "nl": "Net L1"
+          }
+        },
+        "measure_current.l2": {
+          "title": {
+            "en": "Mains L2",
+            "nl": "Net L2"
+          }
+        },
+        "measure_current.l3": {
+          "title": {
+            "en": "Mains L3",
+            "nl": "Net L3"
+          }
+        },
+        "measure_current.ev_l1": {
+          "title": {
+            "en": "EV L1",
+            "nl": "EV L1"
+          }
+        },
+        "measure_current.ev_l2": {
+          "title": {
+            "en": "EV L2",
+            "nl": "EV L2"
+          }
+        },
+        "measure_current.ev_l3": {
+          "title": {
+            "en": "EV L3",
+            "nl": "EV L3"
+          }
+        },
+        "measure_current.home_battery": {
+          "title": {
+            "en": "Home battery",
+            "nl": "Thuisbatterij"
+          }
+        },
+        "meter_power.charged": {
+          "title": {
+            "en": "Charged (session)",
+            "nl": "Geladen (sessie)"
+          }
+        },
+        "meter_power.total_charged": {
+          "title": {
+            "en": "Charged (total)",
+            "nl": "Geladen (totaal)"
+          }
+        },
+        "meter_power.mains_import": {
+          "title": {
+            "en": "Mains import",
+            "nl": "Net afname"
+          }
+        },
+        "meter_power.mains_export": {
+          "title": {
+            "en": "Mains export",
+            "nl": "Net teruglevering"
+          }
+        },
+        "meter_power.ev_import": {
+          "title": {
+            "en": "EV import",
+            "nl": "EV afname"
+          }
+        },
+        "meter_power.ev_export": {
+          "title": {
+            "en": "EV export",
+            "nl": "EV teruglevering"
+          }
+        },
+        "measure_temperature.esp": {
+          "title": {
+            "en": "Controller",
+            "nl": "Controller"
+          }
+        }
+      },
       "energy": {
         "evCharger": true
       },

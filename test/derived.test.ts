@@ -4,6 +4,9 @@ describe('deriveChargingState', () => {
   test.each([
     [{ plug: 'Disconnected', state: 'State A', mode: 'Normal' }, 'plugged_out'],
     [{ plug: 'Connected', state: 'State C, Charging', mode: 'Normal' }, 'plugged_in_charging'],
+    [{ plug: 'Connected', state: 'Charging', mode: 'Smart' }, 'plugged_in_charging'],
+    [{ plug: 'Connected', state: 'Charging Stopped', mode: 'Smart' }, 'plugged_in'],
+    [{ plug: 'Connected', state: 'Charging Stopped', mode: 'Pause' }, 'plugged_in_paused'],
     [{ plug: 'Connected', state: 'State B', mode: 'Pause' }, 'plugged_in_paused'],
     [{ plug: 'Connected', state: 'State B', mode: 'Normal' }, 'plugged_in'],
     [{ plug: 'Connected', state: 'State B', mode: 'Smart' }, 'plugged_in'],

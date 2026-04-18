@@ -25,10 +25,8 @@ module.exports = class SmartEvseDevice extends Homey.Device {
   async onInit(): Promise<void> {
     await super.onInit();
 
-    this.log('[DEV] onInit entered');
     const settings = this.getSettings() as { prefix: string };
     this.prefix = settings.prefix;
-    this.log('[DEV] onInit prefix=', JSON.stringify(this.prefix), 'hubConnected=', this.hub?.isConnected?.());
 
     await this.ensureCapabilities();
     this.registerWritableListeners();
@@ -103,11 +101,7 @@ module.exports = class SmartEvseDevice extends Homey.Device {
 
   private onTopic(suffix: string, payload: string): void {
     const res = decode(suffix, payload);
-    if (!res) {
-      this.log('[dev] decode MISS suffix=', suffix, 'payload=', payload);
-      return;
-    }
-    this.log('[dev] decode OK suffix=', suffix, '->', res.capId, '=', String(res.value));
+    if (!res) return;
 
     // Cache inputs used for derived capabilities.
     if (res.capId === 'mode') this.lastMode = res.value as Mode;
@@ -120,9 +114,7 @@ module.exports = class SmartEvseDevice extends Homey.Device {
     if (suffix === 'State') this.tryTrigger('charger_state_changed', { state: res.value });
     if (suffix === 'RFIDLastRead') this.tryTrigger('rfid_swiped', { uid: res.value });
 
-    this.setCapabilityValue(res.capId, res.value).catch((e) => {
-      this.error('[dev] setCapabilityValue failed', res.capId, String(e));
-    });
+    this.setCapabilityValue(res.capId, res.value).catch(() => {});
     this.updateDerived();
   }
 
@@ -141,7 +133,6 @@ module.exports = class SmartEvseDevice extends Homey.Device {
   }
 
   private onOnlineChange(online: boolean): void {
-    this.log('[dev] onOnlineChange online=', online);
     this.setCapabilityValue('online', online).catch(() => {});
     if (online) this.setAvailable().catch(() => {});
     else this.setUnavailable(this.homey.__('unavailable.device_offline')).catch(() => {});

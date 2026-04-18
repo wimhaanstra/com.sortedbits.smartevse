@@ -2,7 +2,7 @@
   "name": "com.sortedbits.smartevse",
   "version": "1.0.0",
   "scripts": {
-    "build": "tsc --noEmit",
+    "build": "tsc",
     "lint": "eslint --ext .js,.ts --ignore-path .eslintignore .",
     "test": "jest",
     "test:watch": "jest --watch"

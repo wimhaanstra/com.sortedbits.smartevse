@@ -34,24 +34,14 @@ export class MqttHub {
       queueQoSZero: true,
       clean: true,
     };
-    this.logger.log('[mqtt] connecting to', url, 'user=', cfg.username ?? '(none)');
     const client = mqtt.connect(url, opts);
     this.client = client;
 
-    client.on('message', (topic, payload) => {
-      const str = payload.toString();
-      const preview = str.length > 120 ? `${str.slice(0, 120)}…` : str;
-      this.logger.log('[mqtt] rx', topic, '=', preview);
-      this.route(topic, str);
-    });
+    client.on('message', (topic, payload) => this.route(topic, payload.toString()));
     client.on('connect', () => this.onConnected());
     client.on('error', (err) => this.logger.error('[mqtt]', err.message));
-    client.on('offline', () => {
-      this.logger.log('[mqtt] offline');
-      this.broadcastOffline();
-    });
+    client.on('offline', () => this.broadcastOffline());
     client.on('reconnect', () => this.logger.log('[mqtt] reconnecting'));
-    client.on('close', () => this.logger.log('[mqtt] close'));
 
     await new Promise<void>((resolve, reject) => {
       const handlers = {
@@ -91,33 +81,27 @@ export class MqttHub {
 
   subscribe(sub: HubSubscription): void {
     this.subscriptions.set(sub.prefix, sub);
-    const connected = this.client?.connected === true;
-    this.logger.log('[mqtt] subscribe', `${sub.prefix}/#`, 'connected=', connected);
-    if (connected) {
-      this.client!.subscribe(`${sub.prefix}/#`, { qos: 0 }, (err, granted) => {
+    if (this.client?.connected) {
+      this.client.subscribe(`${sub.prefix}/#`, { qos: 0 }, (err) => {
         if (err) this.logger.error('[mqtt] subscribe error', sub.prefix, err.message);
-        else this.logger.log('[mqtt] subscribed', granted?.map((g) => `${g.topic}@${g.qos}`).join(','));
       });
     }
   }
 
   unsubscribe(prefix: string): void {
     this.subscriptions.delete(prefix);
-    this.logger.log('[mqtt] unsubscribe', `${prefix}/#`);
     if (this.client?.connected) {
       this.client.unsubscribe(`${prefix}/#`, {}, () => {});
     }
   }
 
   private onConnected(): void {
-    this.logger.log('[mqtt] connected; active subs=', this.subscriptions.size);
+    this.logger.log('[mqtt] connected');
     for (const sub of this.subscriptions.values()) {
-      this.client!.subscribe(`${sub.prefix}/#`, { qos: 0 }, (err, granted) => {
+      this.client!.subscribe(`${sub.prefix}/#`, { qos: 0 }, (err) => {
         if (err) this.logger.error('[mqtt] subscribe error', sub.prefix, err.message);
-        else this.logger.log('[mqtt] subscribed', granted?.map((g) => `${g.topic}@${g.qos}`).join(','));
       });
     }
-    if (this.outbox.length) this.logger.log('[mqtt] flushing outbox, size=', this.outbox.length);
     while (this.outbox.length) {
       const m = this.outbox.shift()!;
       this.client!.publish(m.topic, m.payload, { qos: 0, retain: m.retain }, () => {});
@@ -135,20 +119,13 @@ export class MqttHub {
     );
     for (const [prefix, sub] of entries) {
       if (topic === `${prefix}/connected`) {
-        this.logger.log('[mqtt] route onOnline', prefix, payload);
         sub.onOnline(payload === 'online');
         return;
       }
       if (topic.startsWith(`${prefix}/`)) {
-        const suffix = topic.slice(prefix.length + 1);
-        this.logger.log('[mqtt] route onMessage prefix=', prefix, 'suffix=', suffix);
-        sub.onMessage(suffix, payload);
+        sub.onMessage(topic.slice(prefix.length + 1), payload);
         return;
       }
     }
-    this.logger.log(
-      '[mqtt] route no-match topic=', topic,
-      'known prefixes=', [...this.subscriptions.keys()].join('|') || '(none)',
-    );
   }
 }

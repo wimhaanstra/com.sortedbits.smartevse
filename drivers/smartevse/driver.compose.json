@@ -1,6 +1,6 @@
 {
   "id": "smartevse",
-  "name": { "en": "SmartEVSE", "nl": "SmartEVSE" },
+  "name": { "en": "Smart EVSE", "nl": "Smart EVSE" },
   "class": "evcharger",
   "platforms": ["local"],
   "connectivity": ["lan"],

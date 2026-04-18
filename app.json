@@ -10,12 +10,12 @@
     "local"
   ],
   "name": {
-    "en": "SmartEVSE via MQTT",
-    "nl": "SmartEVSE via MQTT"
+    "en": "Smart EVSE via MQTT",
+    "nl": "Smart EVSE via MQTT"
   },
   "description": {
-    "en": "Full support for SmartEVSE via MQTT",
-    "nl": "Volledige ondersteuning voor SmartEVSE via MQTT"
+    "en": "Full support for Smart EVSE via MQTT",
+    "nl": "Volledige ondersteuning voor Smart EVSE via MQTT"
   },
   "category": [
     "energy"
@@ -628,8 +628,8 @@
     {
       "id": "smartevse",
       "name": {
-        "en": "SmartEVSE",
-        "nl": "SmartEVSE"
+        "en": "Smart EVSE",
+        "nl": "Smart EVSE"
       },
       "class": "evcharger",
       "platforms": [

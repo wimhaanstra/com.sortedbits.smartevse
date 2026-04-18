@@ -1,7 +1,7 @@
 {
   "app": {
-    "name": "SmartEVSE",
-    "description": "Volledige ondersteuning voor SmartEVSE"
+    "name": "Smart EVSE",
+    "description": "Volledige ondersteuning voor Smart EVSE"
   },
   "settings": {
     "title": "MQTT-broker",
@@ -16,7 +16,7 @@
     "status_error": "Fout"
   },
   "pair": {
-    "title": "SmartEVSE toevoegen",
+    "title": "Smart EVSE toevoegen",
     "name": "Apparaatnaam",
     "prefix": "Topic-prefix",
     "prefix_hint": "bijv. SmartEVSE/1234",
@@ -27,6 +27,6 @@
   },
   "unavailable": {
     "broker_disconnected": "MQTT-broker niet verbonden",
-    "device_offline": "SmartEVSE is offline"
+    "device_offline": "Smart EVSE is offline"
   }
 }

@@ -71,32 +71,32 @@ module.exports = class SmartEvseDriver extends Homey.Driver {
     const setMode = this.homey.flow.getActionCard('set_mode');
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setMode.registerRunListener(async (args: { device: any; mode: string }) => {
-      await args.device.setCapabilityValue('mode', args.mode);
+      await args.device.triggerCapabilityListener('mode', args.mode);
     });
 
     const setCurrent = this.homey.flow.getActionCard('set_current_override');
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setCurrent.registerRunListener(async (args: { device: any; amps: number }) => {
-      await args.device.setCapabilityValue('charge_current', args.amps);
+      await args.device.triggerCapabilityListener('charge_current', args.amps);
     });
 
     const setLock = this.homey.flow.getActionCard('set_cable_lock');
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setLock.registerRunListener(async (args: { device: any; value: number }) => {
-      await args.device.setCapabilityValue('cable_lock', args.value);
+      await args.device.triggerCapabilityListener('cable_lock', args.value);
     });
 
     const setC2 = this.homey.flow.getActionCard('set_enable_c2');
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setC2.registerRunListener(async (args: { device: any; mode: string }) => {
-      await args.device.setCapabilityValue('enable_c2', args.mode);
+      await args.device.triggerCapabilityListener('enable_c2', args.mode);
     });
 
     const setLed = this.homey.flow.getActionCard('set_led_color');
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setLed.registerRunListener(async (args: { device: any; slot: string; r: number; g: number; b: number }) => {
       const capId = `led_color_${args.slot.toLowerCase()}`;
-      await args.device.setCapabilityValue(capId, `${args.r},${args.g},${args.b}`);
+      await args.device.triggerCapabilityListener(capId, `${args.r},${args.g},${args.b}`);
     });
   }
 

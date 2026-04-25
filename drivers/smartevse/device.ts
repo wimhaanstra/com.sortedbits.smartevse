@@ -1,10 +1,12 @@
 import Homey from 'homey';
 import { MqttHub } from '../../lib/mqtt-hub';
 import { decode, encode } from '../../lib/topic-codec';
-import { deriveChargingState, deriveIsCharging, deriveTargetPower } from '../../lib/derived';
+import {
+  deriveChargingState, deriveIsCharging, deriveTargetPower, detectChargingStateChange,
+} from '../../lib/derived';
 import { wattsToDeciAmps } from '../../lib/meter-payload';
 import { ALL_CAPS } from '../../lib/capability-map';
-import { Mode, PlugState } from '../../lib/types';
+import { ChargingState, Mode, PlugState } from '../../lib/types';
 
 type AppWithHub = Homey.App & { mqttHub: MqttHub };
 
@@ -17,6 +19,7 @@ module.exports = class SmartEvseDevice extends Homey.Device {
   private lastPlug: PlugState | undefined;
   private lastState: string | undefined;
   private lastPhases: '1' | '3' | undefined;
+  private lastChargingState: ChargingState | undefined;
 
   private get hub(): MqttHub {
     return (this.homey.app as AppWithHub).mqttHub;
@@ -124,6 +127,11 @@ module.exports = class SmartEvseDevice extends Homey.Device {
     });
     this.setCapabilityValue('evcharger_charging_state', cs).catch(() => {});
 
+    const change = detectChargingStateChange(this.lastChargingState, cs);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if (change) this.tryTrigger('charging_state_changed_from_to', change as any, change as any);
+    this.lastChargingState = cs;
+
     const charging = deriveIsCharging(this.lastMode, this.lastState);
     this.setCapabilityValue('evcharger_charging', charging).catch(() => {});
 
@@ -139,11 +147,15 @@ module.exports = class SmartEvseDevice extends Homey.Device {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private tryTrigger(id: string, tokens: Record<string, unknown>): void {
+  private tryTrigger(
+    id: string,
+    tokens: Record<string, unknown>,
+    state: Record<string, unknown> = {},
+  ): void {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const api = this.homey.flow as any;
     if (typeof api.getDeviceTriggerCard !== 'function') return;
     const card = api.getDeviceTriggerCard(id);
-    if (card?.trigger) card.trigger(this, tokens, {}).catch(() => {});
+    if (card?.trigger) card.trigger(this, tokens, state).catch(() => {});
   }
 };

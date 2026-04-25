@@ -16,6 +16,7 @@ module.exports = class SmartEvseDriver extends Homey.Driver {
     await super.onInit();
     this.registerFlowActions();
     this.registerFlowConditions();
+    this.registerFlowTriggers();
   }
 
   async onPair(session: Homey.Driver.PairSession): Promise<void> {
@@ -98,6 +99,16 @@ module.exports = class SmartEvseDriver extends Homey.Driver {
       const capId = `led_color_${args.slot.toLowerCase()}`;
       await args.device.triggerCapabilityListener(capId, `${args.r},${args.g},${args.b}`);
     });
+  }
+
+  private registerFlowTriggers(): void {
+    const fromTo = this.homey.flow.getDeviceTriggerCard('charging_state_changed_from_to');
+    fromTo.registerRunListener(
+      async (
+        args: { from: string; to: string },
+        state: { from: string; to: string },
+      ) => args.from === state.from && args.to === state.to,
+    );
   }
 
   private registerFlowConditions(): void {

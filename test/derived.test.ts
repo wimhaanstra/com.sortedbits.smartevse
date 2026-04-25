@@ -1,4 +1,6 @@
-import { deriveChargingState, deriveIsCharging, deriveTargetPower } from '../lib/derived';
+import {
+  deriveChargingState, deriveIsCharging, deriveTargetPower, detectChargingStateChange,
+} from '../lib/derived';
 
 describe('deriveChargingState', () => {
   test.each([
@@ -45,5 +47,25 @@ describe('deriveTargetPower', () => {
   });
   test('undefined current → 0', () => {
     expect(deriveTargetPower(undefined, '1')).toBe(0);
+  });
+});
+
+describe('detectChargingStateChange', () => {
+  test('no previous value → null (no transition)', () => {
+    expect(detectChargingStateChange(undefined, 'plugged_in')).toBeNull();
+  });
+
+  test('same value → null (no transition)', () => {
+    expect(detectChargingStateChange('plugged_in', 'plugged_in')).toBeNull();
+  });
+
+  test('different value → transition object', () => {
+    expect(detectChargingStateChange('plugged_in_paused', 'plugged_in_charging'))
+      .toEqual({ from: 'plugged_in_paused', to: 'plugged_in_charging' });
+  });
+
+  test('plugged_out → plugged_in', () => {
+    expect(detectChargingStateChange('plugged_out', 'plugged_in'))
+      .toEqual({ from: 'plugged_out', to: 'plugged_in' });
   });
 });

@@ -27,3 +27,17 @@ export function deriveTargetPower(amps: number | undefined, phases: '1' | '3' | 
   const p = phases === '3' ? 3 : 1;
   return Math.round(amps * 230 * p);
 }
+
+export interface ChargingStateChange {
+  from: ChargingState;
+  to: ChargingState;
+}
+
+export function detectChargingStateChange(
+  prev: ChargingState | undefined,
+  next: ChargingState,
+): ChargingStateChange | null {
+  if (prev === undefined) return null;
+  if (prev === next) return null;
+  return { from: prev, to: next };
+}

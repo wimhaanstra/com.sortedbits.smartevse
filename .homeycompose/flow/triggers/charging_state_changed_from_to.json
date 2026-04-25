@@ -4,6 +4,10 @@
     "en": "Charging state changed from ... to ...",
     "nl": "Oplaadstatus is veranderd van ... naar ..."
   },
+  "titleFormatted": {
+    "en": "Charging state changed from [[from]] to [[to]]",
+    "nl": "Oplaadstatus is veranderd van [[from]] naar [[to]]"
+  },
   "tokens": [
     { "name": "from", "type": "string", "title": { "en": "From", "nl": "Van" }, "example": { "en": "plugged_in_paused" } },
     { "name": "to", "type": "string", "title": { "en": "To", "nl": "Naar" }, "example": { "en": "plugged_in_charging" } }

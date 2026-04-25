@@ -128,8 +128,7 @@ module.exports = class SmartEvseDevice extends Homey.Device {
     this.setCapabilityValue('evcharger_charging_state', cs).catch(() => {});
 
     const change = detectChargingStateChange(this.lastChargingState, cs);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    if (change) this.tryTrigger('charging_state_changed_from_to', change as any, change as any);
+    if (change) this.tryTrigger('charging_state_changed_from_to', change, change);
     this.lastChargingState = cs;
 
     const charging = deriveIsCharging(this.lastMode, this.lastState);
@@ -149,8 +148,8 @@ module.exports = class SmartEvseDevice extends Homey.Device {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private tryTrigger(
     id: string,
-    tokens: Record<string, unknown>,
-    state: Record<string, unknown> = {},
+    tokens: object,
+    state: object = {},
   ): void {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const api = this.homey.flow as any;

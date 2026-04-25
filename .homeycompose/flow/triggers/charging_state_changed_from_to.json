@@ -1,0 +1,38 @@
+{
+  "id": "charging_state_changed_from_to",
+  "title": {
+    "en": "Charging state changed from ... to ...",
+    "nl": "Oplaadstatus is veranderd van ... naar ..."
+  },
+  "tokens": [
+    { "name": "from", "type": "string", "title": { "en": "From", "nl": "Van" }, "example": { "en": "plugged_in_paused" } },
+    { "name": "to", "type": "string", "title": { "en": "To", "nl": "Naar" }, "example": { "en": "plugged_in_charging" } }
+  ],
+  "args": [
+    { "name": "device", "type": "device", "filter": "driver_id=smartevse" },
+    {
+      "name": "from",
+      "type": "dropdown",
+      "title": { "en": "From", "nl": "Van" },
+      "values": [
+        { "id": "plugged_in_charging", "label": { "en": "Charging", "nl": "Opladen" } },
+        { "id": "plugged_in_discharging", "label": { "en": "Discharging", "nl": "Ontladen" } },
+        { "id": "plugged_in_paused", "label": { "en": "Paused", "nl": "Gepauzeerd" } },
+        { "id": "plugged_in", "label": { "en": "Plugged in", "nl": "Aangesloten" } },
+        { "id": "plugged_out", "label": { "en": "Unplugged", "nl": "Niet aangesloten" } }
+      ]
+    },
+    {
+      "name": "to",
+      "type": "dropdown",
+      "title": { "en": "To", "nl": "Naar" },
+      "values": [
+        { "id": "plugged_in_charging", "label": { "en": "Charging", "nl": "Opladen" } },
+        { "id": "plugged_in_discharging", "label": { "en": "Discharging", "nl": "Ontladen" } },
+        { "id": "plugged_in_paused", "label": { "en": "Paused", "nl": "Gepauzeerd" } },
+        { "id": "plugged_in", "label": { "en": "Plugged in", "nl": "Aangesloten" } },
+        { "id": "plugged_out", "label": { "en": "Unplugged", "nl": "Niet aangesloten" } }
+      ]
+    }
+  ]
+}

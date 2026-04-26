@@ -13,7 +13,7 @@ Give every custom SmartEVSE capability a recognizable icon in the Homey UI by ad
 
 ## Decisions
 
-1. **Icon source:** FontAwesome Free, **Solid** style (`fas`) only. No mixing with `regular` or `brands` in this pass.
+1. **Icon source:** FontAwesome Free **Solid** style (`fas`) only — version 7.x as resolved by `npm install --no-save @fortawesome/fontawesome-free` (latest at install time). No mixing with `regular` or `brands` in this pass.
 2. **Color treatment:** Keep FA SVGs as-shipped (black `<path>`, no `fill` attribute manipulation). May revisit later if Homey UI rendering looks wrong.
 3. **Asset layout:** Files placed at `assets/icons/<capability_id>.svg`, referenced from capability JSON as `/assets/icons/<capability_id>.svg`.
 4. **Scope rule:** Only add an `icon` field to truly custom capabilities. Standard Homey capability IDs (`measure_rssi` is the only one in this app) inherit Homey's built-in icon and must be left alone.

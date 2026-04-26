@@ -6,7 +6,7 @@
 
 **Architecture:** Per-capability SVG files live at `assets/icons/<capability_id>.svg` (one file per capability, even when the underlying FA glyph is reused). Each capability JSON in `.homeycompose/capabilities/` gains an `"icon"` field referencing its file. After all edits, `homey app validate` regenerates `app.json` from compose sources.
 
-**Tech Stack:** Homey Apps SDK v3, `.homeycompose` source layout, Homey CLI 4.x (`homey app validate`), FontAwesome Free 6.x SVGs (acquired via `npm install --no-save @fortawesome/fontawesome-free`).
+**Tech Stack:** Homey Apps SDK v3, `.homeycompose` source layout, Homey CLI 4.x (`homey app validate`), FontAwesome Free 7.x SVGs (acquired via `npm install --no-save @fortawesome/fontawesome-free`, latest at install time).
 
 **Spec:** `docs/superpowers/specs/2026-04-26-capability-icons-fontawesome-design.md`
 

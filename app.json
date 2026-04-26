@@ -993,7 +993,8 @@
             "nl": "Pauze"
           }
         }
-      ]
+      ],
+      "icon": "/assets/icons/access.svg"
     },
     "cable_lock": {
       "type": "number",
@@ -1006,7 +1007,8 @@
       "step": 1,
       "decimals": 0,
       "getable": true,
-      "setable": true
+      "setable": true,
+      "icon": "/assets/icons/cable_lock.svg"
     },
     "charge_current": {
       "type": "number",
@@ -1025,7 +1027,8 @@
       "getable": true,
       "setable": true,
       "uiComponent": "slider",
-      "insights": true
+      "insights": true,
+      "icon": "/assets/icons/charge_current.svg"
     },
     "charger_state": {
       "type": "string",
@@ -1034,7 +1037,8 @@
         "nl": "Laderstatus"
       },
       "getable": true,
-      "setable": false
+      "setable": false,
+      "icon": "/assets/icons/charger_state.svg"
     },
     "cp_pwm": {
       "type": "number",
@@ -1079,7 +1083,8 @@
             "nl": "Uit"
           }
         }
-      ]
+      ],
+      "icon": "/assets/icons/custom_button.svg"
     },
     "enable_c2": {
       "type": "enum",
@@ -1134,7 +1139,8 @@
         "nl": "Fout"
       },
       "getable": true,
-      "setable": false
+      "setable": false,
+      "icon": "/assets/icons/error.svg"
     },
     "esp_uptime": {
       "type": "number",
@@ -1162,7 +1168,8 @@
       },
       "decimals": 2,
       "getable": true,
-      "setable": false
+      "setable": false,
+      "icon": "/assets/icons/ev_energy_capacity.svg"
     },
     "ev_energy_request": {
       "type": "number",
@@ -1176,7 +1183,8 @@
       },
       "decimals": 2,
       "getable": true,
-      "setable": false
+      "setable": false,
+      "icon": "/assets/icons/ev_energy_request.svg"
     },
     "ev_plug_state": {
       "type": "enum",
@@ -1201,7 +1209,8 @@
             "nl": "Niet aangesloten"
           }
         }
-      ]
+      ],
+      "icon": "/assets/icons/ev_plug_state.svg"
     },
     "ev_soc_computed": {
       "type": "number",
@@ -1218,7 +1227,8 @@
       "decimals": 0,
       "getable": true,
       "setable": false,
-      "insights": true
+      "insights": true,
+      "icon": "/assets/icons/ev_soc_computed.svg"
     },
     "ev_soc_full": {
       "type": "number",
@@ -1234,7 +1244,8 @@
       "max": 100,
       "decimals": 0,
       "getable": true,
-      "setable": false
+      "setable": false,
+      "icon": "/assets/icons/ev_soc_full.svg"
     },
     "ev_soc_initial": {
       "type": "number",
@@ -1251,7 +1262,8 @@
       "decimals": 0,
       "getable": true,
       "setable": false,
-      "insights": true
+      "insights": true,
+      "icon": "/assets/icons/ev_soc_initial.svg"
     },
     "ev_soc_remaining": {
       "type": "number",
@@ -1267,7 +1279,8 @@
       "max": 100,
       "decimals": 0,
       "getable": true,
-      "setable": false
+      "setable": false,
+      "icon": "/assets/icons/ev_soc_remaining.svg"
     },
     "ev_time_until_full": {
       "type": "number",
@@ -1281,7 +1294,8 @@
       },
       "decimals": 0,
       "getable": true,
-      "setable": false
+      "setable": false,
+      "icon": "/assets/icons/ev_time_until_full.svg"
     },
     "evccid": {
       "type": "string",
@@ -1290,7 +1304,8 @@
         "nl": "EVCCID"
       },
       "getable": true,
-      "setable": false
+      "setable": false,
+      "icon": "/assets/icons/evccid.svg"
     },
     "led_color_custom": {
       "type": "string",
@@ -1303,7 +1318,8 @@
       "hint": {
         "en": "R,G,B (0-255)",
         "nl": "R,G,B (0-255)"
-      }
+      },
+      "icon": "/assets/icons/led_color_custom.svg"
     },
     "led_color_normal": {
       "type": "string",
@@ -1316,7 +1332,8 @@
       "hint": {
         "en": "R,G,B (0-255)",
         "nl": "R,G,B (0-255)"
-      }
+      },
+      "icon": "/assets/icons/led_color_normal.svg"
     },
     "led_color_off": {
       "type": "string",
@@ -1329,7 +1346,8 @@
       "hint": {
         "en": "R,G,B (0-255)",
         "nl": "R,G,B (0-255)"
-      }
+      },
+      "icon": "/assets/icons/led_color_off.svg"
     },
     "led_color_smart": {
       "type": "string",
@@ -1342,7 +1360,8 @@
       "hint": {
         "en": "R,G,B (0-255)",
         "nl": "R,G,B (0-255)"
-      }
+      },
+      "icon": "/assets/icons/led_color_smart.svg"
     },
     "led_color_solar": {
       "type": "string",
@@ -1355,7 +1374,8 @@
       "hint": {
         "en": "R,G,B (0-255)",
         "nl": "R,G,B (0-255)"
-      }
+      },
+      "icon": "/assets/icons/led_color_solar.svg"
     },
     "load_bl": {
       "type": "number",
@@ -1365,7 +1385,8 @@
       },
       "decimals": 0,
       "getable": true,
-      "setable": false
+      "setable": false,
+      "icon": "/assets/icons/load_bl.svg"
     },
     "max_current": {
       "type": "number",
@@ -1380,7 +1401,8 @@
       "decimals": 1,
       "getable": true,
       "setable": false,
-      "insights": true
+      "insights": true,
+      "icon": "/assets/icons/max_current.svg"
     },
     "max_sum_mains": {
       "type": "number",
@@ -1397,7 +1419,8 @@
       "step": 1,
       "decimals": 0,
       "getable": true,
-      "setable": true
+      "setable": true,
+      "icon": "/assets/icons/max_sum_mains.svg"
     },
     "max_sum_mains_time": {
       "type": "number",
@@ -1475,7 +1498,7 @@
           }
         }
       ],
-      "icon": "/assets/icon.svg"
+      "icon": "/assets/icons/mode.svg"
     },
     "nr_of_phases": {
       "type": "enum",
@@ -1500,7 +1523,8 @@
             "nl": "3-fase"
           }
         }
-      ]
+      ],
+      "icon": "/assets/icons/nr_of_phases.svg"
     },
     "ocpp": {
       "type": "string",
@@ -1518,7 +1542,8 @@
         "nl": "OCPP-verbinding"
       },
       "getable": true,
-      "setable": false
+      "setable": false,
+      "icon": "/assets/icons/ocpp_connection.svg"
     },
     "online": {
       "type": "boolean",
@@ -1527,7 +1552,8 @@
         "nl": "Online"
       },
       "getable": true,
-      "setable": false
+      "setable": false,
+      "icon": "/assets/icons/online.svg"
     },
     "pairing_pin": {
       "type": "string",
@@ -1536,7 +1562,8 @@
         "nl": "Koppelings-PIN"
       },
       "getable": true,
-      "setable": false
+      "setable": false,
+      "icon": "/assets/icons/pairing_pin.svg"
     },
     "required_evccid": {
       "type": "string",
@@ -1545,7 +1572,8 @@
         "nl": "Vereist EVCCID"
       },
       "getable": true,
-      "setable": true
+      "setable": true,
+      "icon": "/assets/icons/required_evccid.svg"
     },
     "rfid_last_read": {
       "type": "string",
@@ -1554,7 +1582,8 @@
         "nl": "Laatst gelezen RFID"
       },
       "getable": true,
-      "setable": false
+      "setable": false,
+      "icon": "/assets/icons/rfid_last_read.svg"
     },
     "rfid_status": {
       "type": "string",
@@ -1563,7 +1592,8 @@
         "nl": "RFID-status"
       },
       "getable": true,
-      "setable": false
+      "setable": false,
+      "icon": "/assets/icons/rfid_status.svg"
     },
     "solar_stop_timer": {
       "type": "number",
@@ -1577,7 +1607,8 @@
       },
       "decimals": 0,
       "getable": true,
-      "setable": false
+      "setable": false,
+      "icon": "/assets/icons/solar_stop_timer.svg"
     },
     "wifi_bssid": {
       "type": "string",
@@ -1595,7 +1626,8 @@
         "nl": "Wi-Fi SSID"
       },
       "getable": true,
-      "setable": false
+      "setable": false,
+      "icon": "/assets/icons/wifi_ssid.svg"
     }
   }
 }

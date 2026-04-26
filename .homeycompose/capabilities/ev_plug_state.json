@@ -6,5 +6,6 @@
   "values": [
     { "id": "Connected", "title": { "en": "Connected", "nl": "Aangesloten" } },
     { "id": "Disconnected", "title": { "en": "Disconnected", "nl": "Niet aangesloten" } }
-  ]
+  ],
+  "icon": "/assets/icons/ev_plug_state.svg"
 }

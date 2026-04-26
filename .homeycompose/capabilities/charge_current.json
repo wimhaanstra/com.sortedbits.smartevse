@@ -9,5 +9,6 @@
   "getable": true,
   "setable": true,
   "uiComponent": "slider",
-  "insights": true
+  "insights": true,
+  "icon": "/assets/icons/charge_current.svg"
 }

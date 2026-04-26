@@ -5,5 +5,6 @@
   "values": [
     { "id": "On", "title": { "en": "On", "nl": "Aan" } },
     { "id": "Off", "title": { "en": "Off", "nl": "Uit" } }
-  ]
+  ],
+  "icon": "/assets/icons/custom_button.svg"
 }

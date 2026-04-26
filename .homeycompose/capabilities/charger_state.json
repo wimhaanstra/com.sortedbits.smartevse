@@ -2,5 +2,6 @@
   "type": "string",
   "title": { "en": "Charger state", "nl": "Laderstatus" },
   "getable": true,
-  "setable": false
+  "setable": false,
+  "icon": "/assets/icons/charger_state.svg"
 }

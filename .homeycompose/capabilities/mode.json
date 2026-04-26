@@ -12,5 +12,5 @@
     { "id": "Solar", "title": { "en": "Solar", "nl": "Zon" } },
     { "id": "Pause", "title": { "en": "Pause", "nl": "Pauze" } }
   ],
-  "icon": "/assets/icon.svg"
+  "icon": "/assets/icons/mode.svg"
 }

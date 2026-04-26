@@ -6,5 +6,6 @@
   "step": 1,
   "decimals": 0,
   "getable": true,
-  "setable": true
+  "setable": true,
+  "icon": "/assets/icons/cable_lock.svg"
 }

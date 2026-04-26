@@ -2,5 +2,6 @@
   "type": "string",
   "title": { "en": "LED colour — custom", "nl": "LED-kleur — aangepast" },
   "getable": true, "setable": false,
-  "hint": { "en": "R,G,B (0-255)", "nl": "R,G,B (0-255)" }
+  "hint": { "en": "R,G,B (0-255)", "nl": "R,G,B (0-255)" },
+  "icon": "/assets/icons/led_color_custom.svg"
 }

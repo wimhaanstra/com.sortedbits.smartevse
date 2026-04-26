@@ -108,7 +108,14 @@ module.exports = class SmartEvseDevice extends Homey.Device {
 
     // Cache inputs used for derived capabilities.
     if (res.capId === 'mode') this.lastMode = res.value as Mode;
-    if (res.capId === 'ev_plug_state') this.lastPlug = res.value as PlugState;
+    if (res.capId === 'ev_plug_state') {
+      const next = res.value as PlugState;
+      if (this.lastPlug !== undefined && this.lastPlug !== next) {
+        if (next === 'Connected') this.tryTrigger('ev_plug_connected', {});
+        else if (next === 'Disconnected') this.tryTrigger('ev_plug_disconnected', {});
+      }
+      this.lastPlug = next;
+    }
     if (res.capId === 'charger_state') this.lastState = res.value as string;
     if (res.capId === 'nr_of_phases') this.lastPhases = res.value as '1' | '3';
 

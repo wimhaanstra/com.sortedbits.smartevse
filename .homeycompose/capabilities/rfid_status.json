@@ -1,5 +1,6 @@
 {
   "type": "string",
   "title": { "en": "RFID status", "nl": "RFID-status" },
-  "getable": true, "setable": false
+  "getable": true, "setable": false,
+  "icon": "/assets/icons/rfid_status.svg"
 }

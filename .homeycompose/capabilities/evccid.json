@@ -1,5 +1,6 @@
 {
   "type": "string",
   "title": { "en": "EVCCID", "nl": "EVCCID" },
-  "getable": true, "setable": false
+  "getable": true, "setable": false,
+  "icon": "/assets/icons/evccid.svg"
 }

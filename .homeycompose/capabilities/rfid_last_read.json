@@ -1,5 +1,6 @@
 {
   "type": "string",
   "title": { "en": "Last RFID read", "nl": "Laatst gelezen RFID" },
-  "getable": true, "setable": false
+  "getable": true, "setable": false,
+  "icon": "/assets/icons/rfid_last_read.svg"
 }

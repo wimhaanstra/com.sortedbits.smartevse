@@ -7,5 +7,6 @@
     { "id": "Allow", "title": { "en": "Allow", "nl": "Toegestaan" } },
     { "id": "Deny", "title": { "en": "Deny", "nl": "Geweigerd" } },
     { "id": "Pause", "title": { "en": "Pause", "nl": "Pauze" } }
-  ]
+  ],
+  "icon": "/assets/icons/access.svg"
 }

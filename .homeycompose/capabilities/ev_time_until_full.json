@@ -3,5 +3,6 @@
   "title": { "en": "Time until full", "nl": "Tijd tot vol" },
   "units": { "en": "min", "nl": "min" },
   "decimals": 0,
-  "getable": true, "setable": false
+  "getable": true, "setable": false,
+  "icon": "/assets/icons/ev_time_until_full.svg"
 }

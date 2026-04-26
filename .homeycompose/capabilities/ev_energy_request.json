@@ -3,5 +3,6 @@
   "title": { "en": "Energy requested", "nl": "Gevraagde energie" },
   "units": { "en": "kWh", "nl": "kWh" },
   "decimals": 2,
-  "getable": true, "setable": false
+  "getable": true, "setable": false,
+  "icon": "/assets/icons/ev_energy_request.svg"
 }

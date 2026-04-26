@@ -1,5 +1,6 @@
 {
   "type": "string",
   "title": { "en": "Error", "nl": "Fout" },
-  "getable": true, "setable": false
+  "getable": true, "setable": false,
+  "icon": "/assets/icons/error.svg"
 }

@@ -1,5 +1,6 @@
 {
   "type": "boolean",
   "title": { "en": "Online", "nl": "Online" },
-  "getable": true, "setable": false
+  "getable": true, "setable": false,
+  "icon": "/assets/icons/online.svg"
 }

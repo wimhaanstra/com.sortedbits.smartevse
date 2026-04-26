@@ -1,5 +1,6 @@
 {
   "type": "number",
   "title": { "en": "Load balancing role", "nl": "Loadbalancing-rol" },
-  "decimals": 0, "getable": true, "setable": false
+  "decimals": 0, "getable": true, "setable": false,
+  "icon": "/assets/icons/load_bl.svg"
 }

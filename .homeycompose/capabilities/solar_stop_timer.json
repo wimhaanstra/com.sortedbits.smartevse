@@ -2,5 +2,6 @@
   "type": "number",
   "title": { "en": "Solar stop timer", "nl": "Zonne-stop timer" },
   "units": { "en": "s", "nl": "s" },
-  "decimals": 0, "getable": true, "setable": false
+  "decimals": 0, "getable": true, "setable": false,
+  "icon": "/assets/icons/solar_stop_timer.svg"
 }

@@ -1,5 +1,6 @@
 {
   "type": "string",
   "title": { "en": "OCPP connection", "nl": "OCPP-verbinding" },
-  "getable": true, "setable": false
+  "getable": true, "setable": false,
+  "icon": "/assets/icons/ocpp_connection.svg"
 }

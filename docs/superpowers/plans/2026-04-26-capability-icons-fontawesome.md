@@ -161,9 +161,9 @@ git add assets/icons/
 git commit -m "Add FontAwesome Free Solid SVGs for capability icons
 
 Stage 33 SVG files at assets/icons/<capability_id>.svg, sourced from
-@fortawesome/fontawesome-free 6.x. One file per icon-bearing
-capability; shared glyphs (wifi, lightbulb) are duplicated as separate
-files so capabilities can diverge later.
+@fortawesome/fontawesome-free (latest at install time, currently 7.x).
+One file per icon-bearing capability; shared glyphs (wifi, lightbulb)
+are duplicated as separate files so capabilities can diverge later.
 "
 ```
 

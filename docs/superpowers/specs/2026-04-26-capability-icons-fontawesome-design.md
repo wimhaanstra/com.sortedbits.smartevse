@@ -87,7 +87,7 @@ Give every custom SmartEVSE capability a recognizable icon in the Homey UI by ad
 |---|---|
 | `cp_pwm` | Internal CP signal diagnostic |
 | `cp_pwm_override` | Internal CP signal diagnostic |
-| `enable_c2` | Boolean toggle, no value in iconography |
+| `enable_c2` | Configuration enum (5 values, `setable`); editorial choice to keep visually distinct from the iconized `mode` enum |
 | `esp_uptime` | Diagnostic uptime counter |
 | `ocpp` | Companion to `ocpp_connection`, redundant |
 | `wifi_bssid` | Diagnostic, redundant with `wifi_ssid` |

@@ -1,6 +1,3 @@
-Smart EVSE via MQTT
-==================
-
 Bring your Smart EVSE-3 into Homey as a fully featured EV charger. This app
 connects to your MQTT broker, subscribes to the topics your Smart EVSE already
 publishes, and turns them into a rich Homey device you can view, control and
@@ -11,7 +8,7 @@ talks to the Smart EVSE. You bring your own MQTT server (Mosquitto, the one
 built into Home Assistant, an add-on on your NAS - anything works).
 
 What you get
-------------
+
 - Native Homey EV charger: start and stop charging, set the target power,
   and flip between the Smart EVSE Normal, Smart, Solar, Pause and Off modes
   straight from the device tile.
@@ -30,7 +27,7 @@ What you get
   OCPP status and load balancing role.
 
 Setup
------
+
 1. In the Smart EVSE web UI, enable MQTT and point it at your broker. Note the
    topic prefix it uses (for example Smart EVSE/1234).
 2. In Homey: Settings -> Apps -> Smart EVSE via MQTT -> Configure and enter
